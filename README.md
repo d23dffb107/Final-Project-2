@@ -1,8 +1,9 @@
 Pacapong
+Combination of
 
 Road map of goals:
 Pong:
-1)	Players can control paddles with WASD and arrow keys (bounded within a certain area)
+1)	Players can control paddles with WASD and arrow keys (bounded within a certain area) Done
 2)	Shoot a pac-man at the other side.
 3)	Collide with pac-man and collect him.
 4)	Timer and score bars at top.
@@ -22,4 +23,4 @@ Donkey Kong:
 
 
 5/24/15:
-	Pong(1) complete.
+	Pong(1) complete. (Ri Jiu)

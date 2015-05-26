@@ -1,4 +1,5 @@
 private Paddle left, right;
+private PacMan p;
 private boolean keyUp, keyDown, keyLeft, keyRight, keyW, keyS, keyA, keyD;
 
 public void setup() {
@@ -6,6 +7,7 @@ public void setup() {
   background(23, 32, 49);
   left = new Paddle(color(249, 187, 126), 75, 225);
   right = new Paddle(color(211, 105, 106), 725, 225);
+  p = new PacMan(75,225,-1);
 }
 
 public void keyPressed() {
@@ -64,8 +66,9 @@ public void keyReleased() {
 
 public void draw() {
   background(23, 32, 49);
-  left.draw();
-  right.draw();
+  left.display();
+  right.display();
+  p.display();
   if (keyW && left.getY() >= 75) {
     left.move(0, -2);
   }

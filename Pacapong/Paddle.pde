@@ -21,7 +21,7 @@ public class Paddle {
     this.y += y;
   }
 
-  public void draw() {
+  public void display() {
     rectMode(CENTER);
     fill(c);
     rect(x, y, 20, 70);
