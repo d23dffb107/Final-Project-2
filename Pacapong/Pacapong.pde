@@ -7,7 +7,10 @@ public void setup() {
   background(23, 32, 49);
   left = new Paddle(color(249, 187, 126), 75, 225);
   right = new Paddle(color(211, 105, 106), 725, 225);
-  p = new PacMan(75,225,-1);
+  p = new PacMan(85, 225, left);
+  noStroke();
+  rectMode(CENTER);
+  ellipseMode(CENTER);
 }
 
 public void keyPressed() {
@@ -64,11 +67,7 @@ public void keyReleased() {
   }
 }
 
-public void draw() {
-  background(23, 32, 49);
-  left.display();
-  right.display();
-  p.display();
+public void move() {
   if (keyW && left.getY() >= 75) {
     left.move(0, -2);
   }
@@ -92,6 +91,28 @@ public void draw() {
   }
   if (keyRight && right.getX() <= 780) {
     right.move(2, 0);
+  }
+}
+
+public void draw() {
+  background(23, 32, 49);
+  left.display();
+  right.display();
+  p.display();
+  move();
+  if (p.getOwner() != left) {
+    if (p.getX() - left.getX() <= 10 && p.getX() - left.getX() >= 0 && abs(p.getY() - left.getY()) <= 45) {
+      p.setOwner(left);
+    }
+  } else if (p.getOwner() != right) {
+    if (right.getX() - p.getX() <= 10 && right.getX() - p.getX() >= 0 && abs(p.getY() - right.getY()) <= 45) {
+      p.setOwner(right);
+    }
+  }
+  if (p.getX() >= 800) {
+    p.setOwner(left);
+  } else if (p.getX() <= 0) {
+    p.setOwner(right);
   }
 }
 

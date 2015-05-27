@@ -1,24 +1,48 @@
 public class PacMan {
-  private int x, y, mode, time;
+  private int x, y, time;
+  private Paddle owner;
 
-  public PacMan(int x, int y, int mode) {
+  public PacMan(int x, int y, Paddle owner) {
     this.x = x;
     this.y = y;
-    this.mode = mode;
+    this.owner = owner;
+    time = second();
   }
 
-  public int getMode() {
-    return mode;
+  public int getX() {
+    return x;
+  }
+
+  public int getY() {
+    return y;
+  }
+
+  public Paddle getOwner() {
+    return owner;
+  }
+
+  public void setOwner(Paddle owner) {
+    this.owner = owner;
+    time = second();
   }
 
   public void display() {
-    ellipseMode(CENTER);
-    if (mode == -1) {
-      fill(color(249, 187, 126));
-    } else if (mode == 1) {
-      fill(color(211, 105, 106));
+    fill(owner.getColor());
+    arc(x, y, 20, 20, 0, TWO_PI);
+    if (second() > time) {
+      if (owner.getX() < 150) {
+        x += 2;
+      } else if (owner.getX() > 650) {
+        x -= 2;
+      }
+    } else {
+      if (owner.getX() < 150) {
+        x = owner.getX() + 10;
+      } else if (owner.getX() > 650) {
+        x = owner.getX() - 10;
+      }
+      y = owner.getY();
     }
-    ellipse(x, y, 10, 10);
   }
 }
 

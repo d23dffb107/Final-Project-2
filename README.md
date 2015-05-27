@@ -1,5 +1,11 @@
 Pacapong
-Combination of
+
+A combination of pong, pac-man and space invaders. You control a paddle that shoots a pac-man to the other side. 
+You have some control over how the pac-man moves through the maze. Collect space invader icons to send space invaders on your opponent’s side. 
+Collect small circles to shoot them upwards. Avoid ghosts. Collect big orbs and consume ghosts. 
+Do good things (get circles, eat ghosts, shoot space invaders) and get points. 
+Do bad things (touch space invaders, let pac-man get through, touch ghosts, touch the barrels that donkey kong throws) and lose points. 
+Have the most points at the end to win. Kinda complicated.
 
 Road map of goals:
 Pong:
@@ -24,3 +30,5 @@ Donkey Kong:
 
 5/24/15:
 	Pong(1) complete. (Ri Jiu)
+5/26/15:
+	Pong(2) and Pong(3) complete. Cannot control pacman; he only heads in the opposite direction. Also, he doesn't look right (he's just a circle). (Ri Jiu)
