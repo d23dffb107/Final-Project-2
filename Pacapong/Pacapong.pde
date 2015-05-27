@@ -1,6 +1,7 @@
 private Paddle left, right;
 private PacMan p;
 private boolean keyUp, keyDown, keyLeft, keyRight, keyW, keyS, keyA, keyD;
+private char[][] map;
 
 public void setup() {
   size(800, 450);
@@ -8,6 +9,7 @@ public void setup() {
   left = new Paddle(color(249, 187, 126), 75, 225);
   right = new Paddle(color(211, 105, 106), 725, 225);
   p = new PacMan(85, 225, left);
+  map = new char[20][16];
   noStroke();
   rectMode(CENTER);
   ellipseMode(CENTER);
