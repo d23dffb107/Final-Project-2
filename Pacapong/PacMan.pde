@@ -29,7 +29,11 @@ public class PacMan {
   public void display() {
     fill(owner.getColor());
     arc(x, y, 20, 20, 0, TWO_PI);
+<<<<<<< HEAD
     if (millis() >= time + 1000) {
+=======
+    if (millis() > time) {
+>>>>>>> brian
       if (owner.getX() < 150) {
         x += 2;
       } else if (owner.getX() > 650) {

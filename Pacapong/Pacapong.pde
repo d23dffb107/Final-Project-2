@@ -118,3 +118,7 @@ public void draw() {
   }
 }
 
+  public void map(String filename){
+      File hi = new File(filename);
+  }
+
