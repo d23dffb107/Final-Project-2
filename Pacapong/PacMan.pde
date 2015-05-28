@@ -38,18 +38,15 @@ public class PacMan {
   }
 
   public void display() {
-<<<<<<< HEAD
     fill(owner.getColor());
-    arc(x, y, 20, 20, 0, TWO_PI);
-<<<<<<< HEAD
-    if (millis() >= time + 1000) {
-=======
-    if (millis() > time) {
->>>>>>> brian
-      if (owner.getX() < 150) {
-=======
-    fill(owner.getColor());     
-    float offset = pow((millis() - time)/50.0%3, 1.5) * PI/10;
+    
+    float offset = (int)((millis() - time) / 50.0 % 4);
+    if (offset == 1 || offset == 3) {
+      offset = PI/6;
+    } else if (offset == 2) {
+      offset = PI/3;
+    }
+    
     if (direction.equals("RIGHT")) {
       arc(x, y, 20, 20, offset, TWO_PI - offset);
     } else if (direction.equals("LEFT")) {
@@ -65,8 +62,7 @@ public class PacMan {
 
     if (millis() >= time + 1000) {
       if (direction.equals("RIGHT")) {
->>>>>>> 94eb32c5d2d63bed58582068fb3ecdb6b7c404e3
-        x += 2;
+          x += 2;
       } else if (direction.equals("LEFT")) {
         x -= 2;
       } else if (direction.equals("UP")) {
