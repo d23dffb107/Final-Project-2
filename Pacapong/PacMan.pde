@@ -38,8 +38,15 @@ public class PacMan {
   }
 
   public void display() {
-    fill(owner.getColor());     
-    float offset = pow((millis() - time)/50.0%3, 1.5) * PI/10;
+    fill(owner.getColor());
+    
+    float offset = (int)((millis() - time) / 50.0 % 4);
+    if (offset == 1 || offset == 3) {
+      offset = PI/6;
+    } else if (offset == 2) {
+      offset = PI/3;
+    }
+    
     if (direction.equals("RIGHT")) {
       arc(x, y, 20, 20, offset, TWO_PI - offset);
     } else if (direction.equals("LEFT")) {
@@ -52,7 +59,7 @@ public class PacMan {
       arc(x, y, 20, 20, 0, 3*HALF_PI - offset);
       arc(x, y, 20, 20, 3*HALF_PI + offset, TWO_PI);
     }
-
+    
     if (millis() >= time + 1000) {
       if (direction.equals("RIGHT")) {
         x += 2;
