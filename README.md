@@ -31,4 +31,8 @@ Donkey Kong:
 5/24/15:
 	Pong(1) complete. (Ri Jiu)
 5/26/15:
-	Pong(2) and Pong(3) complete. Cannot control pacman; he only heads in the opposite direction. Also, he doesn't look right (he's just a circle). (Ri Jiu)
+	Pong(2) and Pong(3) complete. Cannot control pacman; he only heads in the opposite direction. Also, he doesn't look right (he's just a 			circle). (Ri Jiu)
+
+5/28/15:
+	Pac-Man looks kinda like Pac-Man. (Ri Jiu)
+	Worked on map (Brian)
