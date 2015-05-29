@@ -70,29 +70,51 @@ public void keyReleased() {
 }
 
 public void move() {
-  if (keyW && left.getY() >= 75) {
-    left.move(0, -2);
+  if (keyW) {
+    if (left.getY() >= 75) {
+      left.move(0, -2);
+    }
+    p.setDirection(left, "UP");
   }
-  if (keyS && left.getY() <= 375) {
-    left.move(0, 2);
+  if (keyS) {
+    if (left.getY() <= 375) {
+      left.move(0, 2);
+    }
+    p.setDirection(left, "DOWN");
   }
-  if (keyA && left.getX() >= 20) {
-    left.move(-2, 0);
+  if (keyA) {
+    if (left.getX() >= 20) {
+      left.move(-2, 0);
+    }
   }
-  if (keyD && left.getX() <= 140) {
-    left.move(2, 0);
+  if (keyD) {
+    if (left.getX() <= 140) {
+      left.move(2, 0);
+    }
+    p.setDirection(left, "RIGHT");
   }
-  if (keyUp && right.getY() >= 75) {
-    right.move(0, -2);
+  if (keyUp) {
+    if (right.getY() >= 75) {
+      right.move(0, -2);
+    }
+    p.setDirection(right, "UP");
   }
-  if (keyDown && right.getY() <= 375) {
-    right.move(0, 2);
+  if (keyDown) {
+    if (right.getY() <= 375) {
+      right.move(0, 2);
+    }
+    p.setDirection(right, "DOWN");
   }
-  if (keyLeft && right.getX() >= 660) {
-    right.move(-2, 0);
+  if (keyLeft) {
+    if (right.getX() >= 660) {
+      right.move(-2, 0);
+    }
+    p.setDirection(right, "LEFT");
   }
-  if (keyRight && right.getX() <= 780) {
-    right.move(2, 0);
+  if (keyRight) {
+    if (right.getX() <= 780) {
+      right.move(2, 0);
+    }
   }
 }
 
@@ -101,7 +123,12 @@ public void draw() {
   left.display();
   right.display();
   p.display();
-  move();
+  if (millis() <= 60000) {
+    move();
+  }
+  fill(255, 255, 255);
+  arc(400, 30, 20, 20, 3*HALF_PI, 3*HALF_PI + millis() * PI / 30000.0);
+  arc(400, 30, 20, 20, 0, millis() * PI / 30000.0 - HALF_PI);
   if (p.getOwner() != left) {
     if (p.getX() - left.getX() <= 10 && p.getX() - left.getX() >= 0 && abs(p.getY() - left.getY()) <= 45) {
       p.setOwner(left);
@@ -118,7 +145,7 @@ public void draw() {
   }
 }
 
-  public void map(String filename){
-      File hi = new File(filename);
-  }
+public void map(String filename) {
+  File hi = new File(filename);
+}
 

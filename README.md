@@ -36,3 +36,5 @@ Donkey Kong:
 5/28/15:
 	Pac-Man looks kinda like Pac-Man. (Ri Jiu)
 	Worked on map (Brian)
+5/29/15:
+	Pac-Man moves. (Ri Jiu)
