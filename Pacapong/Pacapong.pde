@@ -1,3 +1,5 @@
+import java.util.*;
+
 private Paddle left, right;
 private PacMan p;
 private boolean keyUp, keyDown, keyLeft, keyRight, keyW, keyS, keyA, keyD;
@@ -13,6 +15,7 @@ public void setup() {
   noStroke();
   rectMode(CENTER);
   ellipseMode(CENTER);
+  map("map.txt");
 }
 
 public void keyPressed() {
@@ -98,6 +101,7 @@ public void move() {
 
 public void draw() {
   background(23, 32, 49);
+  map("map.txt");
   left.display();
   right.display();
   p.display();
@@ -119,6 +123,24 @@ public void draw() {
 }
 
   public void map(String filename){
-      File hi = new File(filename);
+      int x = 210;
+      int y = 75;
+      Scanner scan = new Scanner(filename);
+      String line = "";
+      while(scan.hasNextLine()){
+        line = scan.nextLine();
+        for(int i=0;i<line.length();i++){
+          if(line.substring(i,i+1).equals("#")){
+            fill(153);
+            rect(x,y,19,19);
+          }else if(line.substring(i,i+1).equals(" ")){
+            fill(153);
+            ellipse(x,y,5,5);
+          }
+          x+=20;
+        }
+        y+=20;
+      }
+            
   }
 
