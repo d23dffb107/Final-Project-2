@@ -1,5 +1,5 @@
 public class PacMan {
-  private int x, y, time;
+  private int x, y, time, score;
   private Paddle owner;
   private String direction;
 
@@ -37,6 +37,18 @@ public class PacMan {
     }
   }
 
+  public void setDirection(Paddle owner, String dir) {
+    if (this.owner == owner) {
+      if (dir.equals("UP") && !direction.equals("DOWN") && millis() >= time + 1000 && x > 166 && x < 640) {
+        direction = "UP";
+      } else if (dir.equals("DOWN") && !direction.equals("UP") && millis() >= time + 1000 && x > 166 && x < 640) {
+        direction = "DOWN";
+      } else if (dir.equals("LEFT") || dir.equals("RIGHT")) {
+        direction = dir;
+      }
+    }
+  }
+
   public void display() {
     fill(owner.getColor());
     
@@ -46,23 +58,23 @@ public class PacMan {
     } else if (offset == 2) {
       offset = PI/3;
     }
-    
+
     if (direction.equals("RIGHT")) {
-      arc(x, y, 20, 20, offset, TWO_PI - offset);
+      arc(x, y, 16, 16, offset, TWO_PI - offset);
     } else if (direction.equals("LEFT")) {
-      arc(x, y, 20, 20, 0, PI - offset);
-      arc(x, y, 20, 20, PI + offset, TWO_PI);
+      arc(x, y, 16, 16, 0, PI - offset);
+      arc(x, y, 16, 16, PI + offset, TWO_PI);
     } else if (direction.equals("UP")) {
-      arc(x, y, 20, 20, 0, HALF_PI - offset);
-      arc(x, y, 20, 20, HALF_PI + offset, TWO_PI);
+      arc(x, y, 16, 16, 0, 3*HALF_PI - offset);
+      arc(x, y, 16, 16, 3*HALF_PI + offset, TWO_PI);
     } else if (direction.equals("DOWN")) {
-      arc(x, y, 20, 20, 0, 3*HALF_PI - offset);
-      arc(x, y, 20, 20, 3*HALF_PI + offset, TWO_PI);
+      arc(x, y, 16, 16, 0, HALF_PI - offset);
+      arc(x, y, 16, 16, HALF_PI + offset, TWO_PI);
     }
 
-    if (millis() >= time + 1000) {
+    if (millis() >= time + 1000 && millis() <= 60000) {
       if (direction.equals("RIGHT")) {
-          x += 2;
+        x += 2;
       } else if (direction.equals("LEFT")) {
         x -= 2;
       } else if (direction.equals("UP")) {
@@ -80,4 +92,3 @@ public class PacMan {
     }
   }
 }
-

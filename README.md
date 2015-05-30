@@ -1,4 +1,4 @@
-Pacapong
+﻿Pacapong
 
 A combination of pong, pac-man and space invaders. You control a paddle that shoots a pac-man to the other side. 
 You have some control over how the pac-man moves through the maze. Collect space invader icons to send space invaders on your opponent’s side. 
@@ -10,12 +10,12 @@ Have the most points at the end to win. Kinda complicated.
 Road map of goals:
 Pong:
 1)	Players can control paddles with WASD and arrow keys (bounded within a certain area) Done
-2)	Shoot a pac-man at the other side.
-3)	Collide with pac-man and collect him.
-4)	Timer and score bars at top.
+2)	Shoot a pac-man at the other side. Done
+3)	Collide with pac-man and collect him. Done
+4)	Timer and score bars at top. Semi-done
 5)	Music.
 Pac-Man:
-1)	Make the maze and allow pac-man to move through it. Pac-man controllable with same keys as paddles. Check walls, cannot go backwards (as in opposite of direction he faces, not toward your side).
+1)	Make the maze and allow pac-man to move through it. Pac-man controllable with same keys as paddles. Check walls, cannot go backwards (as in opposite of direction he faces, not toward your side, possibly).
 2)	Ghosts that spawn (randomly?) and follow a specific path? Not sure what their AI entails. Colliding with them decreases score and gives pac-man to opponent.
 3)	Small orbs get collected and increase score.
 4)	Big orbs make ghosts blue and eat-able for a certain period of time. Eating them increases score.
@@ -36,3 +36,8 @@ Donkey Kong:
 5/28/15:
 	Pac-Man looks kinda like Pac-Man. (Ri Jiu)
 	Worked on map (Brian)
+5/29/15:
+	Pac-Man moves. (Ri Jiu)
+	Added timer. (Ri Jiu)
+5/30/15:
+	Displays map properly. No wall collisions yet. (Ri Jiu)

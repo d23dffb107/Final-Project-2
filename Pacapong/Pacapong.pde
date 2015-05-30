@@ -11,11 +11,21 @@ public void setup() {
   left = new Paddle(color(249, 187, 126), 75, 225);
   right = new Paddle(color(211, 105, 106), 725, 225);
   p = new PacMan(85, 225, left);
-  map = new char[20][16];
+  map = new char[21][28];
+  String[] data = loadStrings("map.txt");
+  for (int x = 0; x < data.length; x++) {
+    String line = data[x];
+    for (int y = 0; y < line.length (); y++) {
+      if (line.charAt(y) == ' ') {
+        map[x][y] = 'o';
+      } else {
+        map[x][y] = line.charAt(y);
+      }
+    }
+  }
   noStroke();
   rectMode(CENTER);
   ellipseMode(CENTER);
-  map("map.txt");
 }
 
 public void keyPressed() {
@@ -73,29 +83,51 @@ public void keyReleased() {
 }
 
 public void move() {
-  if (keyW && left.getY() >= 75) {
-    left.move(0, -2);
+  if (keyW) {
+    if (left.getY() >= 75) {
+      left.move(0, -2);
+    }
+    p.setDirection(left, "UP");
   }
-  if (keyS && left.getY() <= 375) {
-    left.move(0, 2);
+  if (keyS) {
+    if (left.getY() <= 375) {
+      left.move(0, 2);
+    }
+    p.setDirection(left, "DOWN");
   }
-  if (keyA && left.getX() >= 20) {
-    left.move(-2, 0);
+  if (keyA) {
+    if (left.getX() >= 20) {
+      left.move(-2, 0);
+    }
   }
-  if (keyD && left.getX() <= 140) {
-    left.move(2, 0);
+  if (keyD) {
+    if (left.getX() <= 140) {
+      left.move(2, 0);
+    }
+    p.setDirection(left, "RIGHT");
   }
-  if (keyUp && right.getY() >= 75) {
-    right.move(0, -2);
+  if (keyUp) {
+    if (right.getY() >= 75) {
+      right.move(0, -2);
+    }
+    p.setDirection(right, "UP");
   }
-  if (keyDown && right.getY() <= 375) {
-    right.move(0, 2);
+  if (keyDown) {
+    if (right.getY() <= 375) {
+      right.move(0, 2);
+    }
+    p.setDirection(right, "DOWN");
   }
-  if (keyLeft && right.getX() >= 660) {
-    right.move(-2, 0);
+  if (keyLeft) {
+    if (right.getX() >= 660) {
+      right.move(-2, 0);
+    }
+    p.setDirection(right, "LEFT");
   }
-  if (keyRight && right.getX() <= 780) {
-    right.move(2, 0);
+  if (keyRight) {
+    if (right.getX() <= 780) {
+      right.move(2, 0);
+    }
   }
 }
 
@@ -105,7 +137,12 @@ public void draw() {
   left.display();
   right.display();
   p.display();
-  move();
+  if (millis() <= 60000) {
+    move();
+  }
+  fill(255, 255, 255);
+  arc(400, 30, 20, 20, 3*HALF_PI, 3*HALF_PI + millis() * PI / 30000.0);
+  arc(400, 30, 20, 20, 0, millis() * PI / 30000.0 - HALF_PI);
   if (p.getOwner() != left) {
     if (p.getX() - left.getX() <= 10 && p.getX() - left.getX() >= 0 && abs(p.getY() - left.getY()) <= 45) {
       p.setOwner(left);
@@ -122,25 +159,58 @@ public void draw() {
   }
 }
 
-  public void map(String filename){
-      int x = 210;
-      int y = 75;
-      Scanner scan = new Scanner(filename);
-      String line = "";
-      while(scan.hasNextLine()){
-        line = scan.nextLine();
-        for(int i=0;i<line.length();i++){
-          if(line.substring(i,i+1).equals("#")){
-            fill(153);
-            rect(x,y,19,19);
-          }else if(line.substring(i,i+1).equals(" ")){
-            fill(153);
-            ellipse(x,y,5,5);
+public void map(String filename) {
+  int startx = 166;
+  int starty = 50;
+  fill(color(47, 93, 131));
+  for (int y = 0; y < map.length; y++) {
+    for (int x = 0; x < map[y].length; x++) {
+      if (map[y][x] == '#') {
+        if (y > 0) {
+          if (map[y - 1][x] == '#') {
+            rect(startx + 18 * x, starty + 18 * y - 4, 10, 10);
           }
-          x+=20;
         }
-        y+=20;
+        if (y < map.length - 1) {
+          if (map[y + 1][x] == '#') {
+            rect(startx + 18 * x, starty + 18 * y + 4, 10, 10);
+          }
+        }
+        if (x > 0) {
+          if (map[y][x - 1] == '#') {
+            rect(startx + 18 * x - 4, starty + 18 * y, 10, 10);
+          }
+        }
+        if (x < map[y].length - 1) {
+          if (map[y][x + 1] == '#') {
+            rect(startx + 18 * x + 4, starty + 18 * y, 10, 10);
+          }
+        }
+        if (y > 0 && x > 0) {
+          if (map[y - 1][x] == '#' && map[y][x - 1] == '#' && map[y - 1][x - 1] == '#') {
+            rect(startx + 18 * x - 4, starty + 18 * y - 4, 10, 10);
+          }
+        }
+        if (y < map.length - 1 && x < map[y].length - 1) {
+          if (map[y + 1][x] == '#' && map[y][x + 1] == '#' && map[y + 1][x + 1] == '#') {
+            rect(startx + 18 * x + 4, starty + 18 * y + 4, 10, 10);
+          }
+        }
+        if (y > 0 && x < map[y].length - 1) {
+          if (map[y - 1][x] == '#' && map[y][x + 1] == '#' && map[y - 1][x + 1] == '#') {
+            rect(startx + 18 * x + 4, starty + 18 * y - 4, 10, 10);
+          }
+        }
+        if (y < map.length - 1 && x > 0) {
+          if (map[y + 1][x] == '#' && map[y][x - 1] == '#' && map[y + 1][x - 1] == '#') {
+            rect(startx + 18 * x - 4, starty + 18 * y + 4, 10, 10);
+          }
+        }
+        rect(startx + 18 * x, starty + 18 * y, 10, 10);
+      } else if (map[y][x] == 'o') {
+        ellipse(startx + 18 * x, starty + 18 * y, 5, 5);
       }
-            
+    }
   }
+}
 
