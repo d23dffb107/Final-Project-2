@@ -1,11 +1,17 @@
 import java.util.*;
+import ddf.minim.*;
 
 private Paddle left, right;
 private PacMan p;
 private boolean keyUp, keyDown, keyLeft, keyRight, keyW, keyS, keyA, keyD;
 private char[][] map;
+private AudioPlayer player;
+private Minim minim;
 
 public void setup() {
+  minim = new Minim(this);
+  player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 2048);
+  player.play();
   size(800, 450);
   background(23, 32, 49);
   left = new Paddle(color(249, 187, 126), 75, 225);
@@ -26,6 +32,12 @@ public void setup() {
   noStroke();
   rectMode(CENTER);
   ellipseMode(CENTER);
+}
+
+public void stop(){
+  player.close();
+  minim.stop();
+  super.stop();
 }
 
 public void keyPressed() {
@@ -189,11 +201,7 @@ public void map() {
 
 public void draw() {
   background(23, 32, 49);
-<<<<<<< HEAD
-  map("map.txt");
-=======
   map();
->>>>>>> RiJiu
   left.display();
   right.display();
   p.display();
@@ -219,7 +227,6 @@ public void draw() {
   }
 }
 
-<<<<<<< HEAD
 public void map(String filename) {
   int startx = 166;
   int starty = 50;
@@ -275,5 +282,4 @@ public void map(String filename) {
   }
 }
 
-=======
->>>>>>> RiJiu
+
