@@ -38,6 +38,7 @@ Donkey Kong:
 	Worked on map (Brian)
 5/29/15:
 	Pac-Man moves. (Ri Jiu)
+<<<<<<< HEAD
 	Added timer. (Ri Jiu)
 5/30/15:
 	Displays map properly. No wall collisions yet. (Ri Jiu)
