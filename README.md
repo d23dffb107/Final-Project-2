@@ -38,3 +38,5 @@ Donkey Kong:
 	Worked on map (Brian)
 5/29/15:
 	Pac-Man moves. (Ri Jiu)
+5/30/15:
+	Map is displayed. (Ri Jiu)

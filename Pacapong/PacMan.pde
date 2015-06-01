@@ -39,9 +39,9 @@ public class PacMan {
 
   public void setDirection(Paddle owner, String dir) {
     if (this.owner == owner) {
-      if (dir.equals("UP") && !direction.equals("DOWN") && millis() >= time + 1000) {
+      if (dir.equals("UP") && !direction.equals("DOWN") && millis() >= time + 1000 && x > 166 && x < 640) {
         direction = "UP";
-      } else if (dir.equals("DOWN") && !direction.equals("UP") && millis() >= time + 1000) {
+      } else if (dir.equals("DOWN") && !direction.equals("UP") && millis() >= time + 1000 && x > 166 && x < 640) {
         direction = "DOWN";
       } else if (dir.equals("LEFT") || dir.equals("RIGHT")) {
         direction = dir;
@@ -73,6 +73,14 @@ public class PacMan {
     }
 
     if (millis() >= time + 1000 && millis() <= 60000) {
+      if ((x < 166 || x > 640) && (y - 50) % 18 != 0) {
+        if ((y - 68) % 36 < 9) {
+          y -= (y - 68) % 36;
+        } else {
+          y += 36 - (y - 68) % 36;
+        }
+      }
+
       if (direction.equals("RIGHT")) {
         x += 2;
       } else if (direction.equals("LEFT")) {

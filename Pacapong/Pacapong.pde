@@ -9,7 +9,18 @@ public void setup() {
   left = new Paddle(color(249, 187, 126), 75, 225);
   right = new Paddle(color(211, 105, 106), 725, 225);
   p = new PacMan(85, 225, left);
-  map = new char[20][16];
+  map = new char[21][28];
+  String[] data = loadStrings("map.txt");
+  for (int x = 0; x < data.length; x++) {
+    String line = data[x];
+    for (int y = 0; y < line.length (); y++) {
+      if (line.charAt(y) == ' ') {
+        map[x][y] = 'o';
+      } else {
+        map[x][y] = line.charAt(y);
+      }
+    }
+  }
   noStroke();
   rectMode(CENTER);
   ellipseMode(CENTER);
@@ -118,8 +129,65 @@ public void move() {
   }
 }
 
+public void map() {
+  int startx = 166;
+  int starty = 50;
+  for (int y = 0; y < map.length; y++) {
+    for (int x = 0; x < map[y].length; x++) {
+      if (map[y][x] == '#') {
+        fill(color(47, 93, 131));
+        if (y > 0) {
+          if (map[y - 1][x] == '#') {
+            rect(startx + 18 * x, starty + 18 * y - 4, 10, 10);
+          }
+        }
+        if (y < map.length - 1) {
+          if (map[y + 1][x] == '#') {
+            rect(startx + 18 * x, starty + 18 * y + 4, 10, 10);
+          }
+        }
+        if (x > 0) {
+          if (map[y][x - 1] == '#') {
+            rect(startx + 18 * x - 4, starty + 18 * y, 10, 10);
+          }
+        }
+        if (x < map[y].length - 1) {
+          if (map[y][x + 1] == '#') {
+            rect(startx + 18 * x + 4, starty + 18 * y, 10, 10);
+          }
+        }
+        if (y > 0 && x > 0) {
+          if (map[y - 1][x] == '#' && map[y][x - 1] == '#' && map[y - 1][x - 1] == '#') {
+            rect(startx + 18 * x - 4, starty + 18 * y - 4, 10, 10);
+          }
+        }
+        if (y < map.length - 1 && x < map[y].length - 1) {
+          if (map[y + 1][x] == '#' && map[y][x + 1] == '#' && map[y + 1][x + 1] == '#') {
+            rect(startx + 18 * x + 4, starty + 18 * y + 4, 10, 10);
+          }
+        }
+        if (y > 0 && x < map[y].length - 1) {
+          if (map[y - 1][x] == '#' && map[y][x + 1] == '#' && map[y - 1][x + 1] == '#') {
+            rect(startx + 18 * x + 4, starty + 18 * y - 4, 10, 10);
+          }
+        }
+        if (y < map.length - 1 && x > 0) {
+          if (map[y + 1][x] == '#' && map[y][x - 1] == '#' && map[y + 1][x - 1] == '#') {
+            rect(startx + 18 * x - 4, starty + 18 * y + 4, 10, 10);
+          }
+        }
+        rect(startx + 18 * x, starty + 18 * y, 10, 10);
+      } else if (map[y][x] == 'o') {
+        fill(255);
+        ellipse(startx + 18 * x, starty + 18 * y, 5, 5);
+      }
+    }
+  }
+}
+
 public void draw() {
   background(23, 32, 49);
+  map();
   left.display();
   right.display();
   p.display();
@@ -143,9 +211,5 @@ public void draw() {
   } else if (p.getX() <= 0) {
     p.setOwner(right);
   }
-}
-
-public void map(String filename) {
-  File hi = new File(filename);
 }
 
