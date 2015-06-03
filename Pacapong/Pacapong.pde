@@ -7,11 +7,13 @@ private boolean keyUp, keyDown, keyLeft, keyRight, keyW, keyS, keyA, keyD;
 private char[][] map;
 private AudioPlayer player;
 private Minim minim;
+private PImage img;
 
 public void setup() {
-  minim = new Minim(this);
-  player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 2048);
-  player.play();
+  //minim = new Minim(this);
+  //player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 2048);
+  //player.play();
+  img = loadImage("map.png");
   size(800, 450);
   background(23, 32, 49);
   left = new Paddle(color(249, 187, 126), 75, 225);
@@ -201,7 +203,8 @@ public void map() {
 
 public void draw() {
   background(23, 32, 49);
-  map();
+  image(img,166,50);
+  //map();
   left.display();
   right.display();
   p.display();
