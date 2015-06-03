@@ -43,4 +43,4 @@ Donkey Kong:
 5/30/15:
 	Displays map properly. No wall collisions yet. (Ri Jiu)
 5/31/15:
-	Incorporated music in the background, but it makes the game a little bit. (Brian)
+	Incorporated music in the background. Game still lags however. (Brian)
