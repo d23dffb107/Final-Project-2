@@ -27,6 +27,8 @@ Space Invaders
 Donkey Kong:
 1)	Donkey Kong (randomly?) shows up and throws barrels. Pac-man touching barrels gives pac-man to opponent. Paddle touching barrels decreases score.
 
+The first demo is in the branch "Demo1". 
+To play, use WASD to move the left paddle and the arrow keys to move the right paddle.
 
 5/24/15:
 	Pong(1) complete. (Ri Jiu)
