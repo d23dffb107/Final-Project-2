@@ -20,9 +20,9 @@ public void setup() {
   left = new Paddle(color(249, 187, 126), 75, 225);
   right = new Paddle(color(211, 105, 106), 725, 225);
   p = new PacMan(85, 225, left);
-  minim = new Minim(this);
-  player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 2048);
-  player.play();
+  //minim = new Minim(this);
+  //player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 2048);
+  //player.play();
   img = loadImage("map.png");
 }
 
@@ -226,6 +226,13 @@ public void draw() {
     p.setOwner(left);
   } else if (p.getX() <= 0) {
     p.setOwner(right);
+  }
+  if(p.getX() >= 166 && p.getX() <= 634){
+    if(map[(p.getY()-50)/18][(p.getX()-166)/18] == 'o'){
+      if((p.getY()-50)%18 < 2 && (p.getX()-166)%18 < 2){
+        map[(p.getY()-50)/18][(p.getX()-166)/18] = ' ';
+      }
+    }
   }
   for (int y = 0; y < map.length; y++) {
     for (int x = 0; x < map[y].length; x++) {
