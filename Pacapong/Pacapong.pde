@@ -20,9 +20,9 @@ public void setup() {
   left = new Paddle(color(249, 187, 126), 75, 225);
   right = new Paddle(color(211, 105, 106), 725, 225);
   p = new PacMan(85, 225, left);
-  minim = new Minim(this);
-  player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 2048);
-  player.play();
+  //minim = new Minim(this);
+  //player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 2048);
+  //player.play();
   img = loadImage("map.png");
 }
 
@@ -201,18 +201,7 @@ public void map(String filename) {
   save("map.png");
 }
 
-public void draw() {
-  background(23, 32, 49);
-  image(img, 400, 225);
-  left.display();
-  right.display();
-  p.display();
-  if (millis() <= 60000) {
-    move();
-  }
-  fill(255, 255, 255);
-  arc(400, 30, 20, 20, 3*HALF_PI, 3*HALF_PI + millis() * PI / 30000.0);
-  arc(400, 30, 20, 20, 0, millis() * PI / 30000.0 - HALF_PI);
+public void checkStates() {
   if (p.getOwner() != left) {
     if (p.getX() - left.getX() <= 10 && p.getX() - left.getX() >= 0 && abs(p.getY() - left.getY()) <= 45) {
       p.setOwner(left);
@@ -227,6 +216,22 @@ public void draw() {
   } else if (p.getX() <= 0) {
     p.setOwner(right);
   }
+  int[] nextXY = p.getNextXY();
+}
+
+public void draw() {
+  background(23, 32, 49);
+  image(img, 400, 225);
+  left.display();
+  right.display();
+  p.display();
+  if (millis() <= 60000) {
+    move();
+  }
+  fill(255, 255, 255);
+  arc(400, 30, 20, 20, 3*HALF_PI, 3*HALF_PI + millis() * PI / 30000.0);
+  arc(400, 30, 20, 20, 0, millis() * PI / 30000.0 - HALF_PI);
+  checkStates();
   for (int y = 0; y < map.length; y++) {
     for (int x = 0; x < map[y].length; x++) {
       if (map[y][x] == 'o') {

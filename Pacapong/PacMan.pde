@@ -23,6 +23,26 @@ public class PacMan {
     return y;
   }
 
+  public int[] getNextXY() {
+    if (direction.equals("UP")) {
+      return new int[] {
+        getY() - 18, getX()
+        };
+      } else if (direction.equals("DOWN")) {
+      return new int[] {
+        getY() + 18, getX()
+        };
+      } else if (direction.equals("LEFT")) {
+      return new int[] {
+        getY(), getX() - 18
+      };
+    } else {
+      return new int[] {
+        getY(), getX() + 18
+      };
+    }
+  }
+
   public Paddle getOwner() {
     return owner;
   }
@@ -51,7 +71,7 @@ public class PacMan {
 
   public void display() {
     fill(owner.getColor());
-    
+
     float offset = (int)((millis() - time) / 50.0 % 4);
     if (offset == 1 || offset == 3) {
       offset = PI/6;
@@ -100,3 +120,4 @@ public class PacMan {
     }
   }
 }
+
