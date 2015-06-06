@@ -45,3 +45,5 @@ To play, use WASD to move the left paddle and the arrow keys to move the right p
 	Displays map properly. No wall collisions yet. (Ri Jiu)
 5/31/15:
 	Incorporated music in the background. Game still lags however. (Brian)
+6/6/15:
+	Wall collision works! But now we have to work on manual turns and timing. (Brian)
