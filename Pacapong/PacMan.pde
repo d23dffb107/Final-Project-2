@@ -36,6 +36,10 @@ public class PacMan {
       direction = "LEFT";
     }
   }
+  
+  public String getDirection(){
+    return direction;
+  }
 
   public void setDirection(Paddle owner, String dir) {
     if (this.owner == owner) {

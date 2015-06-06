@@ -227,13 +227,45 @@ public void draw() {
   } else if (p.getX() <= 0) {
     p.setOwner(right);
   }
-  if(p.getX() >= 166 && p.getX() <= 634){
+  if(p.getX() >= 166 && p.getX() <= 635){
     if(map[(p.getY()-50)/18][(p.getX()-166)/18] == 'o'){
       if((p.getY()-50)%18 < 2 && (p.getX()-166)%18 < 2){
         map[(p.getY()-50)/18][(p.getX()-166)/18] = ' ';
       }
+    }      
+  }
+  if(p.getDirection().equals("RIGHT") && p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50)/18][(p.getX()-166+18)/18] == '#'){
+    if(map[(p.getY()-50-18)/18][(p.getX()-166)/18] == '#'){
+      p.setDirection(p.getOwner(),"DOWN");
+    }else if(map[(p.getY()-50+18)/18][(p.getX()-166)/18] == '#'){
+      p.setDirection(p.getOwner(),"UP");
+    }else{
+      p.setDirection(p.getOwner(),"UP");
     }
   }
+  if(p.getDirection().equals("LEFT") && p.getX() >= 184 && p.getX() <= 635 && map[(p.getY()-50)/18][(p.getX()-166-18)/18] == '#' && (p.getX()-166-18)%18 < 2){
+    if(map[(p.getY()-50-18)/18][(p.getX()-166)/18] == '#'){
+      p.setDirection(p.getOwner(),"DOWN");
+    }else if(map[(p.getY()-50+18)/18][(p.getX()-166)/18] == '#'){
+      p.setDirection(p.getOwner(),"UP");
+    }else{
+      p.setDirection(p.getOwner(),"UP");
+    }
+  }
+  if(p.getDirection().equals("UP") && p.getX() >= 166 && p.getX() <= 635 && map[(p.getY()-50-18)/18][(p.getX()-166)/18] == '#' && (p.getY()-50-18)%18 < 2){
+    if(p.getOwner()==left){
+      p.setDirection(p.getOwner(),"RIGHT");
+    }else{
+      p.setDirection(p.getOwner(),"LEFT");
+    }
+  }     
+  if(p.getDirection().equals("DOWN") && p.getX() >= 166 && p.getX() <= 635 && map[(p.getY()-50+18)/18][(p.getX()-166)/18] == '#'){
+    if(p.getOwner()==left){
+      p.setDirection(p.getOwner(),"RIGHT");
+    }else{
+      p.setDirection(p.getOwner(),"LEFT");
+    }
+  }     
   for (int y = 0; y < map.length; y++) {
     for (int x = 0; x < map[y].length; x++) {
       if (map[y][x] == 'o') {
