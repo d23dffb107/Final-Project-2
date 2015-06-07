@@ -1,13 +1,11 @@
 public class Paddle {
   private color c;
-  private int x, y;
-  private int timer;
+  private int x, y, score;
 
   public Paddle(color c, int x, int y) {
     this.c = c;
     this.x = x;
     this.y = y;
-    timer = 0;
   }
 
   public int getX() {
@@ -27,10 +25,24 @@ public class Paddle {
     return c;
   }
 
+  public void addScore(int s) {
+    score += s;
+    if (score > 100) {
+      score = 100;
+    } else if (score < 0) {
+      score = 0;
+    }
+  }
+
   public void display() {
     fill(c);
     rect(x, y, 20, 70);
-    timer++;
+    fill(255);
+    if (x <= 140) {
+      rect(375-score, 30, score*2, 5);
+    } else if (x >= 660) {
+      rect(425+score, 30, score*2, 5);
+    }
   }
 }
 

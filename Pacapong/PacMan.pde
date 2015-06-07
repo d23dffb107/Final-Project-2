@@ -1,5 +1,5 @@
 public class PacMan {
-  private int x, y, time, score;
+  private int x, y, time;
   private Paddle owner;
   private String direction;
 

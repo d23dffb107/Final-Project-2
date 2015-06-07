@@ -95,7 +95,7 @@ public void move() {
     if (left.getY() >= 75) {
       left.move(0, -2);
     }
-    if (p.getDirection().equals("RIGHT") && p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#' && (p.getX()-166)%18 == 0) {
+    if (p.getOwner() == left && p.getDirection().equals("RIGHT") && p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#' && (p.getX()-166)%18 == 0) {
       p.setDirection("UP");
     }
   }
@@ -103,7 +103,7 @@ public void move() {
     if (left.getY() <= 375) {
       left.move(0, 2);
     }
-    if (p.getDirection().equals("RIGHT") && p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#' && (p.getX()-166)%18 == 0) {
+    if (p.getOwner() == left && p.getDirection().equals("RIGHT") && p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#' && (p.getX()-166)%18 == 0) {
       p.setDirection("DOWN");
     }
   }
@@ -116,7 +116,7 @@ public void move() {
     if (left.getX() <= 140) {
       left.move(2, 0);
     }
-    if (p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50)/18][(p.getX()-166+18)/18] != '#' && (p.getY()-50)%18 == 0) {
+    if (p.getOwner() == left && p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50)/18][(p.getX()-166+18)/18] != '#' && (p.getY()-50)%18 == 0) {
       p.setDirection("RIGHT");
     }
   }
@@ -124,7 +124,7 @@ public void move() {
     if (right.getY() >= 75) {
       right.move(0, -2);
     }
-    if (p.getDirection().equals("LEFT") && p.getX() >= 184 && p.getX() <= 635 && map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#' && (p.getX()-166)%18 == 0) {
+    if (p.getOwner() == right && p.getDirection().equals("LEFT") && p.getX() >= 184 && p.getX() <= 635 && map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#' && (p.getX()-166)%18 == 0) {
       p.setDirection("UP");
     }
   }
@@ -132,7 +132,7 @@ public void move() {
     if (right.getY() <= 375) {
       right.move(0, 2);
     }
-    if (p.getDirection().equals("LEFT") && p.getX() >= 184 && p.getX() <= 635 && map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#' && (p.getX()-166)%18 == 0) {
+    if (p.getOwner() == right && p.getDirection().equals("LEFT") && p.getX() >= 184 && p.getX() <= 635 && map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#' && (p.getX()-166)%18 == 0) {
       p.setDirection("DOWN");
     }
   }
@@ -140,7 +140,7 @@ public void move() {
     if (right.getX() >= 660) {
       right.move(-2, 0);
     }
-    if (p.getX() >= 184 && p.getX() <= 635 && map[(p.getY()-50)/18][(p.getX()-166-18)/18] != '#' && (p.getY()-50)%18 == 0) {
+    if (p.getOwner() == right && p.getX() >= 184 && p.getX() <= 635 && map[(p.getY()-50)/18][(p.getX()-166-18)/18] != '#' && (p.getY()-50)%18 == 0) {
       p.setDirection("LEFT");
     }
   }
@@ -229,13 +229,16 @@ public void checkStates() {
   }
   if (p.getX() >= 800) {
     p.setOwner(left);
+    right.addScore(-10);
   } else if (p.getX() <= 0) {
     p.setOwner(right);
+    left.addScore(-10);
   }
   if (p.getX() >= 166 && p.getX() <= 635) {
     if (map[(p.getY()-50)/18][(p.getX()-166)/18] == 'o') {
       if ((p.getY()-50)%18 < 2 && (p.getX()-166)%18 < 2) {
         map[(p.getY()-50)/18][(p.getX()-166)/18] = ' ';
+        p.getOwner().addScore(1);
       }
     }
   }
