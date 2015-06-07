@@ -36,26 +36,24 @@ public class PacMan {
       direction = "LEFT";
     }
   }
-  
-  public String getDirection(){
+
+  public String getDirection() {
     return direction;
   }
 
-  public void setDirection(Paddle owner, String dir) {
-    if (this.owner == owner) {
-      if (dir.equals("UP") && !direction.equals("DOWN") && millis() >= time + 1000 && x > 166 && x < 640) {
-        direction = "UP";
-      } else if (dir.equals("DOWN") && !direction.equals("UP") && millis() >= time + 1000 && x > 166 && x < 640) {
-        direction = "DOWN";
-      } else if (dir.equals("LEFT") || dir.equals("RIGHT")) {
-        direction = dir;
-      }
+  public void setDirection(String dir) {
+    if (dir.equals("UP") && !direction.equals("DOWN") && millis() >= time + 1000 && x > 166 && x < 640) {
+      direction = "UP";
+    } else if (dir.equals("DOWN") && !direction.equals("UP") && millis() >= time + 1000 && x > 166 && x < 640) {
+      direction = "DOWN";
+    } else if (dir.equals("LEFT") || dir.equals("RIGHT")) {
+      direction = dir;
     }
   }
 
   public void display() {
     fill(owner.getColor());
-    
+
     float offset = (int)((millis() - time) / 50.0 % 4);
     if (offset == 1 || offset == 3) {
       offset = PI/6;
@@ -83,6 +81,9 @@ public class PacMan {
         } else {
           y += 36 - (y - 68) % 36;
         }
+        if (x % 2 == 1) {
+          x += 1;
+        }
       }
 
       if (direction.equals("RIGHT")) {
@@ -104,3 +105,4 @@ public class PacMan {
     }
   }
 }
+
