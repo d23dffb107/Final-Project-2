@@ -8,6 +8,7 @@ private char[][] map;
 private AudioPlayer player;
 private Minim minim;
 private PImage img;
+private ArrayList<Ghost> ghosts;
 
 public void setup() {
   size(800, 450);
@@ -24,6 +25,8 @@ public void setup() {
   } else {
     p = new PacMan(85, 225, right);
   }
+  ghosts = new ArrayList<Ghost>();
+  spawnGhost();
   minim = new Minim(this);
   player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 2048);
   player.play();
@@ -217,6 +220,30 @@ public void map(String filename) {
   save("map.png");
 }
 
+public void spawnGhost() {
+  int x;
+  int y;
+  do {
+    x = int(random(25)) + 1;
+    y = int(random(19)) + 1;
+  }
+  while (map[y][x] == '#');
+  ArrayList<String> dirs = new ArrayList<String>();
+  if (map[y-1][x] != '#') {
+    dirs.add("UP");
+  }
+  if (map[y+1][x] != '#') {
+    dirs.add("DOWN");
+  }
+  if (map[y][x-1] != '#') {
+    dirs.add("LEFT");
+  }
+  if (map[y][x+1] != '#') {
+    dirs.add("RIGHT");
+  }
+  ghosts.add(new Ghost(x*18+166, y*18+50, dirs.get((int)random(dirs.size()))));
+}
+
 public void checkStates() {
   if (p.getOwner() != left) {
     if (p.getX() - left.getX() <= 10 && p.getX() - left.getX() >= 0 && abs(p.getY() - left.getY()) <= 45) {
@@ -242,44 +269,105 @@ public void checkStates() {
       }
     }
   }
-  if (p.getDirection().equals("RIGHT") && p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50)/18][(p.getX()-166+18)/18] == '#' && (p.getX()-166)%18 == 0) {
-    if (map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#' && map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#') {
-      if (randomGaussian() < 0) {
-        p.setDirection("UP");
-      } else {
-        p.setDirection("DOWN");
+  for (Ghost g : ghosts) {
+    if (abs(p.getX() - g.getX()) <= 2 && abs(p.getY() - g.getY()) <= 2) {
+      p.getOwner().addScore(-5);
+      if(p.getOwner() == left){
+        p.setOwner(right); 
+      }else if(p.getOwner() == right){
+        p.setOwner(left); 
       }
-    } else if (map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#') {
-      p.setDirection("UP");
-    } else if (map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#') {
-      p.setDirection("DOWN");
     }
   }
-  if (p.getDirection().equals("LEFT") && p.getX() >= 184 && p.getX() <= 635 && map[(p.getY()-50)/18][(p.getX()-166-18)/18] == '#' && (p.getX()-166)%18 == 0) {
-    if (map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#' && map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#') {
-      if (randomGaussian() < 0) {
-        p.setDirection("UP");
-      } else {
-        p.setDirection("DOWN");
-      }
-    } else if (map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#') {
-      p.setDirection("UP");
-    } else if (map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#') {
-      p.setDirection("DOWN");
+
+  ArrayList<String> dirs = new ArrayList<String>();
+  if (p.getDirection().equals("RIGHT") && (p.getX()-166)%18 == 0 && p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50)/18][(p.getX()-166+18)/18] == '#') {
+    if (map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#') {
+      dirs.add("UP");
     }
+    if (map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#') {
+      dirs.add("DOWN");
+    }
+    p.setDirection(dirs.get((int)random(dirs.size())));
   }
-  if (p.getDirection().equals("UP") && p.getX() >= 166 && p.getX() <= 635 && map[(p.getY()-50-18)/18][(p.getX()-166)/18] == '#' && (p.getY()-50)%18 == 0) {
+  if (p.getDirection().equals("LEFT") && (p.getX()-166)%18 == 0 && p.getX() >= 184 && p.getX() <= 635 && map[(p.getY()-50)/18][(p.getX()-166-18)/18] == '#') {
+    if (map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#') {
+      dirs.add("UP");
+    }
+    if (map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#') {
+      dirs.add("DOWN");
+    }
+    p.setDirection(dirs.get((int)random(dirs.size())));
+  }
+  if (p.getDirection().equals("UP") && (p.getY()-50)%18 == 0 && p.getX() >= 166 && p.getX() <= 635 && map[(p.getY()-50-18)/18][(p.getX()-166)/18] == '#') {
     if (p.getOwner() == left) {
       p.setDirection("RIGHT");
     } else {
       p.setDirection("LEFT");
     }
   }
-  if (p.getDirection().equals("DOWN") && p.getX() >= 166 && p.getX() <= 635 && map[(p.getY()-50+18)/18][(p.getX()-166)/18] == '#' && (p.getY()-50)%18 == 0) {
+  if (p.getDirection().equals("DOWN") && (p.getY()-50)%18 == 0 && p.getX() >= 166 && p.getX() <= 635 && map[(p.getY()-50+18)/18][(p.getX()-166)/18] == '#') {
     if (p.getOwner() == left) {
       p.setDirection("RIGHT");
     } else {
       p.setDirection("LEFT");
+    }
+  }
+  for (Ghost g : ghosts) {
+    dirs.clear();
+    if (g.getDirection().equals("LEFT") && g.getX() == 166) {
+      g.setDirection("RIGHT");
+    } else if (g.getDirection().equals("RIGHT") && g.getX() == 634) {
+      g.setDirection("LEFT");
+    } else {
+      if (g.getDirection().equals("RIGHT") && (g.getX()-166)%18 == 0) {
+        if ((map[(g.getY()-50)/18][(g.getX()-166+18)/18] != '#')) {
+          dirs.add("RIGHT");
+        }
+        if (map[(g.getY()-50-18)/18][(g.getX()-166)/18] != '#') {
+          dirs.add("UP");
+        } 
+        if (map[(g.getY()-50+18)/18][(g.getX()-166)/18] != '#') {
+          dirs.add("DOWN");
+        }
+        g.setDirection(dirs.get(int(random(dirs.size()))));
+      }
+      if (g.getDirection().equals("LEFT") && (g.getX()-166)%18 == 0) {
+        if (map[(g.getY()-50)/18][(g.getX()-166-18)/18] != '#') {
+          dirs.add("LEFT");
+        }
+        if (map[(g.getY()-50-18)/18][(g.getX()-166)/18] != '#') {
+          dirs.add("UP");
+        } 
+        if (map[(g.getY()-50+18)/18][(g.getX()-166)/18] != '#') {
+          dirs.add("DOWN");
+        }
+        g.setDirection(dirs.get(int(random(dirs.size()))));
+      }
+      if (g.getDirection().equals("UP") && (g.getY()-50)%18 == 0) {
+        if (map[(g.getY()-50-18)/18][(g.getX()-166)/18] != '#') {
+          dirs.add("UP");
+        }
+        if (map[(g.getY()-50)/18][(g.getX()-166-18)/18] != '#') {
+          dirs.add("LEFT");
+        }
+        if (map[(g.getY()-50)/18][(g.getX()-166+18)/18] != '#') {
+          dirs.add("RIGHT");
+        }
+        g.setDirection(dirs.get(int(random(dirs.size()))));
+      }
+      if (g.getDirection().equals("DOWN") && (g.getY()-50)%18 == 0) {
+        if (map[(g.getY()-50+18)/18][(g.getX()-166)/18] != '#') {
+          dirs.add("DOWN");
+        }
+        if (map[(g.getY()-50)/18][(g.getX()-166-18)/18] != '#') {
+          dirs.add("LEFT");
+        }
+        if (map[(g.getY()-50)/18][(g.getX()-166+18)/18] != '#') {
+          dirs.add("RIGHT");
+        }
+        g.setDirection(dirs.get(int(random(dirs.size()))));
+      }
     }
   }
 }
@@ -290,9 +378,15 @@ public void draw() {
   left.display();
   right.display();
   p.display();
+  for (Ghost g : ghosts) {
+    g.display();
+  }
   if (millis() <= 60000) {
     move();
     checkStates();
+    if (ghosts.size() <= millis() / 15000) {
+      spawnGhost();
+    }
   }
   fill(255, 255, 255);
   arc(400, 30, 20, 20, 3*HALF_PI, 3*HALF_PI + millis() * PI / 30000.0);

@@ -38,9 +38,9 @@ public class Paddle {
     fill(c);
     rect(x, y, 20, 70);
     fill(255);
-    if (x <= 140) {
+    if (x <= 142) {
       rect(375-score, 30, score*2, 5);
-    } else if (x >= 660) {
+    } else if (x >= 658) {
       rect(425+score, 30, score*2, 5);
     }
   }
