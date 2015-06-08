@@ -9,6 +9,7 @@ private AudioPlayer player;
 private Minim minim;
 private PImage img;
 private ArrayList<Ghost> ghosts;
+private int numPowerUps;
 
 public void setup() {
   size(800, 450);
@@ -267,15 +268,27 @@ public void checkStates() {
         map[(p.getY()-50)/18][(p.getX()-166)/18] = ' ';
         p.getOwner().addScore(1);
       }
+    } else if (map[(p.getY()-50)/18][(p.getX()-166)/18] == 'O') {
+      if ((p.getY()-50)%18 < 2 && (p.getX()-166)%18 < 2) {
+        map[(p.getY()-50)/18][(p.getX()-166)/18] = ' ';
+        for (Ghost g : ghosts) {
+          g.makeWeak();
+        }
+      }
     }
   }
   for (Ghost g : ghosts) {
     if (abs(p.getX() - g.getX()) <= 2 && abs(p.getY() - g.getY()) <= 2) {
-      p.getOwner().addScore(-5);
-      if(p.getOwner() == left){
-        p.setOwner(right); 
-      }else if(p.getOwner() == right){
-        p.setOwner(left); 
+      if (g.isWeak()) {
+        g.kill();
+        p.getOwner().addScore(10);
+      } else if (!g.isWeak()) {
+        p.getOwner().addScore(-5);
+        if (p.getOwner() == left) {
+          p.setOwner(right);
+        } else if (p.getOwner() == right) {
+          p.setOwner(left);
+        }
       }
     }
   }
@@ -388,16 +401,29 @@ public void draw() {
       spawnGhost();
     }
   }
+  if (numPowerUps < millis() / 2000) {
+    int x;
+    int y;
+    do {
+      x = int(random(25)) + 1;
+      y = int(random(19)) + 1;
+    }
+    while (map[y][x] == '#');
+    if (randomGaussian() < 0) {
+      map[y][x] = 'O';
+    }
+    numPowerUps++;
+  }
   fill(255, 255, 255);
   arc(400, 30, 20, 20, 3*HALF_PI, 3*HALF_PI + millis() * PI / 30000.0);
   arc(400, 30, 20, 20, 0, millis() * PI / 30000.0 - HALF_PI);
   for (int y = 0; y < map.length; y++) {
-    for (int x = 0; x < map[y].length; x++) {
+    for (int x = 0; x < map[y].length; x++) 
       if (map[y][x] == 'o') {
-        fill(255);
         ellipse(166 + 18 * x, 50 + 18 * y, 5, 5);
+      } else if (map[y][x] == 'O') {
+        ellipse(166 + 18 * x, 50 + 18 * y, 10, 10);
       }
-    }
   }
 }
 

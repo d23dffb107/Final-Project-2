@@ -31,11 +31,18 @@ public class Ghost {
     time = millis();
   }
 
+  public boolean isWeak(){
+    return weak; 
+  }
+
   public void kill() {
     dead = true;
   }
 
   public void display() {
+    if(millis() - time >= 2000){
+      weak = false; 
+    }
     if (!dead) {
       if ((millis()/50)%2 == 0) {
         if (!weak) {

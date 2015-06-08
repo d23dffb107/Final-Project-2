@@ -18,7 +18,7 @@ PacMan:
 1)	Make the maze and allow pacman to move through it. Pacman controllable with same keys as paddles. Check walls, cannot go backwards (as in opposite of direction he faces, not toward your side, possibly). Done
 2)	Small orbs get collected and increase score. Done
 3)	Ghosts that spawn (randomly?) and follow a specific path? Not sure what their AI entails. Colliding with them decreases score and gives pacman to opponent. Done.
-4)	Big orbs make ghosts blue and eat-able for a certain period of time. Eating them increases score.
+4)	Big orbs make ghosts blue and eat-able for a certain period of time. Eating them increases score. Done.
 5)	Space invaders icons. Spawn space invaders.
 Space Invaders
 1)	Space invaders spawn from top and move down. Lose points if you touch them.
@@ -50,3 +50,4 @@ To play, use WASD to move the left paddle and the arrow keys to move the right p
 	Manual turns work. PacMan can spawn on either paddle. Score displayed with growing rectangle. Score increases by eating small orbs. (Ri Jiu)
 6/7/15:
 	Ghosts spawn every 15 seconds. Colliding PacMan with them causes you to lose points and give it to the other player. (Ri Jiu)
+	Powerups spawn every 2 seconds (50% chance of big orb, no space invaders yet). Can eat ghosts if you ate a big orb in the last 2 seconds, giving you lots of points. (Ri Jiu)
