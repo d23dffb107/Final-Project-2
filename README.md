@@ -19,7 +19,7 @@ PacMan:
 2)	Small orbs get collected and increase score. Done
 3)	Ghosts that spawn (randomly?) and follow a specific path? Not sure what their AI entails. Colliding with them decreases score and gives pacman to opponent. Done.
 4)	Big orbs make ghosts blue and eat-able for a certain period of time. Eating them increases score. Done.
-5)	Space invaders icons. Spawn space invaders.
+5)	Space invaders icons. Spawn space invaders. Semi-done.
 Space Invaders
 1)	Space invaders spawn from top and move down. Lose points if you touch them.
 2)	Small orbs also cause you to shoot them upwards (only shoots them if there are space invaders).
@@ -50,4 +50,6 @@ To play, use WASD to move the left paddle and the arrow keys to move the right p
 	Manual turns work. PacMan can spawn on either paddle. Score displayed with growing rectangle. Score increases by eating small orbs. (Ri Jiu)
 6/7/15:
 	Ghosts spawn every 15 seconds. Colliding PacMan with them causes you to lose points and give it to the other player. (Ri Jiu)
-	Powerups spawn every 2 seconds (50% chance of big orb, no space invaders yet). Can eat ghosts if you ate a big orb in the last 2 seconds, giving you lots of points. (Ri Jiu)
+	Powerups spawn every 3 seconds (50% chance of big orb, no space invaders yet). Can eat ghosts if you ate a big orb in the last 2 seconds, giving you lots of points. (Ri Jiu)
+6/9/15:
+	Space invaders icon show up, but don't spawn space invaders yet. (Ri Jiu)

@@ -1,7 +1,6 @@
 public class Ghost {
-  private int x, y;
+  private int x, y, time, speed;
   private String direction;
-  private int time;
   private boolean weak, dead;
 
   public Ghost(int x, int y, String direction) {
@@ -29,10 +28,11 @@ public class Ghost {
   public void makeWeak() {
     weak = true;
     time = millis();
+    speed = 1;
   }
 
-  public boolean isWeak(){
-    return weak; 
+  public boolean isWeak() {
+    return weak;
   }
 
   public void kill() {
@@ -40,8 +40,15 @@ public class Ghost {
   }
 
   public void display() {
-    if(millis() - time >= 2000){
-      weak = false; 
+    if (millis() - time >= 2000) {
+      weak = false;
+      speed = 2;
+      if (x % 2 == 1) {
+        x++;
+      }
+      if (y % 2 == 1) {
+        y++;
+      }
     }
     if (!dead) {
       if ((millis()/50)%2 == 0) {
@@ -60,13 +67,13 @@ public class Ghost {
 
       if (millis() <= 60000) {
         if (direction.equals("RIGHT")) {
-          x += 2;
+          x += speed;
         } else if (direction.equals("LEFT")) {
-          x -= 2;
+          x -= speed;
         } else if (direction.equals("UP")) {
-          y -= 2;
+          y -= speed;
         } else if (direction.equals("DOWN")) {
-          y += 2;
+          y += speed;
         }
       }
     }

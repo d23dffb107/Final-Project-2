@@ -1,5 +1,5 @@
 public class PacMan {
-  private int x, y, time;
+  private int x, y, time, speed;
   private Paddle owner;
   private String direction;
 
@@ -13,6 +13,7 @@ public class PacMan {
       direction = "LEFT";
     }
     time = millis();
+    speed = 2;
   }
 
   public int getX() {
@@ -87,13 +88,13 @@ public class PacMan {
       }
 
       if (direction.equals("RIGHT")) {
-        x += 2;
+        x += speed;
       } else if (direction.equals("LEFT")) {
-        x -= 2;
+        x -= speed;
       } else if (direction.equals("UP")) {
-        y -= 2;
+        y -= speed;
       } else if (direction.equals("DOWN")) {
-        y += 2;
+        y += speed;
       }
     } else {
       if (owner.getX() < 150) {

@@ -7,8 +7,9 @@ private boolean keyUp, keyDown, keyLeft, keyRight, keyW, keyS, keyA, keyD;
 private char[][] map;
 private AudioPlayer player;
 private Minim minim;
-private PImage img;
+private PImage img, spaceInvader;
 private ArrayList<Ghost> ghosts;
+private ArrayList<int[]> emptyTiles;
 private int numPowerUps;
 
 public void setup() {
@@ -27,11 +28,13 @@ public void setup() {
     p = new PacMan(85, 225, right);
   }
   ghosts = new ArrayList<Ghost>();
+  emptyTiles = new ArrayList<int[]>();
   spawnGhost();
   minim = new Minim(this);
   player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 2048);
   player.play();
   img = loadImage("map.png");
+  spaceInvader = loadImage("spaceInvadersSmall.png");
 }
 
 public void stop() {
@@ -267,6 +270,10 @@ public void checkStates() {
       if ((p.getY()-50)%18 < 2 && (p.getX()-166)%18 < 2) {
         map[(p.getY()-50)/18][(p.getX()-166)/18] = ' ';
         p.getOwner().addScore(1);
+        emptyTiles.add(new int[] {
+          (p.getY()-50)/18, (p.getX()-166)/18
+        }
+        );
       }
     } else if (map[(p.getY()-50)/18][(p.getX()-166)/18] == 'O') {
       if ((p.getY()-50)%18 < 2 && (p.getX()-166)%18 < 2) {
@@ -274,9 +281,22 @@ public void checkStates() {
         for (Ghost g : ghosts) {
           g.makeWeak();
         }
+        emptyTiles.add(new int[] {
+          (p.getY()-50)/18, (p.getX()-166)/18
+        }
+        );
+      }
+    } else if (map[(p.getY()-50)/18][(p.getX()-166)/18] == 'S') {
+      if ((p.getY()-50)%18 < 2 && (p.getX()-166)%18 < 2) {
+        map[(p.getY()-50)/18][(p.getX()-166)/18] = ' ';
+        emptyTiles.add(new int[] {
+          (p.getY()-50)/18, (p.getX()-166)/18
+        }
+        );
       }
     }
   }
+
   for (Ghost g : ghosts) {
     if (abs(p.getX() - g.getX()) <= 2 && abs(p.getY() - g.getY()) <= 2) {
       if (g.isWeak()) {
@@ -400,20 +420,19 @@ public void draw() {
     if (ghosts.size() <= millis() / 15000) {
       spawnGhost();
     }
-  }
-  if (numPowerUps < millis() / 2000) {
-    int x;
-    int y;
-    do {
-      x = int(random(25)) + 1;
-      y = int(random(19)) + 1;
+    if (numPowerUps < millis() / 3000) {
+      int[] xy = emptyTiles.remove(int(random(emptyTiles.size())));
+      int x = xy[1];
+      int y = xy[0];
+      if (randomGaussian() < 0) {
+        map[y][x] = 'O';
+      } else {
+        map[y][x] = 'S';
+      }
+      numPowerUps++;
     }
-    while (map[y][x] == '#');
-    if (randomGaussian() < 0) {
-      map[y][x] = 'O';
-    }
-    numPowerUps++;
   }
+
   fill(255, 255, 255);
   arc(400, 30, 20, 20, 3*HALF_PI, 3*HALF_PI + millis() * PI / 30000.0);
   arc(400, 30, 20, 20, 0, millis() * PI / 30000.0 - HALF_PI);
@@ -423,6 +442,8 @@ public void draw() {
         ellipse(166 + 18 * x, 50 + 18 * y, 5, 5);
       } else if (map[y][x] == 'O') {
         ellipse(166 + 18 * x, 50 + 18 * y, 10, 10);
+      } else if (map[y][x] == 'S') {
+        image(spaceInvader, 166 + 18 * x, 50 + 18 * y);
       }
   }
 }
