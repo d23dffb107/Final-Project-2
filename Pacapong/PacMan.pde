@@ -1,7 +1,7 @@
 public class PacMan {
   private int x, y, time, speed;
   private Paddle owner;
-  private String direction;
+  private String direction,lastCommand;
 
   public PacMan(int x, int y, Paddle owner) {
     this.x = x;
@@ -40,6 +40,14 @@ public class PacMan {
 
   public String getDirection() {
     return direction;
+  }
+  
+  public void setLast(String last){
+    lastCommand = last;
+  }
+  
+  public String getLast(){
+    return lastCommand;
   }
 
   public void setDirection(String dir) {
