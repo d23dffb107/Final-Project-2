@@ -30,9 +30,9 @@ public void setup() {
   ghosts = new ArrayList<Ghost>();
   emptyTiles = new ArrayList<int[]>();
   spawnGhost();
-  minim = new Minim(this);
-  player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 2048);
-  player.play();
+  //minim = new Minim(this);
+  //player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 2048);
+  //player.play();
   img = loadImage("map.png");
   spaceInvader = loadImage("spaceInvadersSmall.png");
 }
@@ -265,6 +265,7 @@ public void checkStates() {
     p.setOwner(right);
     left.addScore(-10);
   }
+
   if (p.getX() >= 166 && p.getX() <= 635) {
     if (map[(p.getY()-50)/18][(p.getX()-166)/18] == 'o') {
       if ((p.getY()-50)%18 < 2 && (p.getX()-166)%18 < 2) {
@@ -334,18 +335,35 @@ public void checkStates() {
   }
   if (p.getDirection().equals("UP") && (p.getY()-50)%18 == 0 && p.getX() >= 166 && p.getX() <= 635 && map[(p.getY()-50-18)/18][(p.getX()-166)/18] == '#') {
     if (p.getOwner() == left) {
-      p.setDirection("RIGHT");
+      if (map[(p.getY()-50)/18][(p.getX()-166+18)/18] != '#') {
+        p.setDirection("RIGHT");
+      } else {
+        p.setDirection("DOWN");
+      }
     } else {
-      p.setDirection("LEFT");
+      if (map[(p.getY()-50)/18][(p.getX()-166-18)/18] != '#') {
+        p.setDirection("LEFT");
+      } else {
+        p.setDirection("DOWN");
+      }
     }
   }
   if (p.getDirection().equals("DOWN") && (p.getY()-50)%18 == 0 && p.getX() >= 166 && p.getX() <= 635 && map[(p.getY()-50+18)/18][(p.getX()-166)/18] == '#') {
     if (p.getOwner() == left) {
-      p.setDirection("RIGHT");
-    } else {
-      p.setDirection("LEFT");
+      if (map[(p.getY()-50)/18][(p.getX()-166+18)/18] != '#') {
+        p.setDirection("RIGHT");
+      } else {
+        p.setDirection("UP");
+      }
+    } else if (p.getOwner() == right) {
+      if (map[(p.getY()-50)/18][(p.getX()-166-18)/18] != '#') {
+        p.setDirection("LEFT");
+      } else {
+        p.setDirection("UP");
+      }
     }
   }
+
   for (Ghost g : ghosts) {
     dirs.clear();
     if (g.getDirection().equals("LEFT") && g.getX() == 166) {

@@ -51,7 +51,7 @@ public class Ghost {
       }
     }
     if (!dead) {
-      if ((millis()/50)%2 == 0) {
+      if ((millis()/100)%2 == 0) {
         if (!weak) {
           image(loadImage("ghost1normal.png"), x, y);
         } else {
