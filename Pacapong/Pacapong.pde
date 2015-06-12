@@ -99,7 +99,9 @@ public void keyReleased() {
 
 public void move() {
   if (keyW) {
-    p.setLast("UP");
+    if(p.getOwner() == left){
+      p.setLast("UP");
+    }
     if (left.getY() >= 75) {
       left.move(0, -2);
     }
@@ -109,7 +111,9 @@ public void move() {
     }
   }
   if (keyS) {
-    p.setLast("DOWN");
+    if(p.getOwner() == left){
+      p.setLast("DOWN");
+    }
     if (left.getY() <= 375) {
       left.move(0, 2);
     }
@@ -119,13 +123,14 @@ public void move() {
     }
   }
   if (keyA) {
-    p.setLast("LEFT");
     if (left.getX() >= 20) {
       left.move(-2, 0);
     }
   }
   if (keyD) {
-    p.setLast("RIGHT");
+    if(p.getOwner() == left){
+      p.setLast("RIGHT");
+    }
     if (left.getX() <= 140) {
       left.move(2, 0);
     }
@@ -135,7 +140,9 @@ public void move() {
     }
   }
   if (keyUp) {
-    p.setLast("UP");
+    if (p.getOwner() == right){
+      p.setLast("UP");
+    }
     if (right.getY() >= 75) {
       right.move(0, -2);
     }
@@ -145,7 +152,9 @@ public void move() {
     }
   }
   if (keyDown) {
-    p.setLast("DOWN");
+    if (p.getOwner() == right){
+      p.setLast("DOWN");
+    }
     if (right.getY() <= 375) {
       right.move(0, 2);
     }
@@ -155,7 +164,9 @@ public void move() {
     }
   }
   if (keyLeft) {
-    p.setLast("LEFT");
+    if (p.getOwner() == right){
+      p.setLast("LEFT");
+    }
     if (right.getX() >= 660) {
       right.move(-2, 0);
     }
@@ -165,7 +176,6 @@ public void move() {
     }
   }
   if (keyRight) {
-    p.setLast("RIGHT");
     if (right.getX() <= 780) {
       right.move(2, 0);
     }
@@ -327,6 +337,18 @@ public void checkStates() {
       }
     }
   }
+  
+  if((p.getX()-166)%18 == 0 && (p.getY()-50)%18 == 0 && p.getX() >= 166 && p.getX() <= 634){
+   if (p.getX() <= 617 && map[(p.getY()-50)/18][(p.getX()-166+18)/18] != '#' && p.getLast().equals("RIGHT")){
+      p.setDirection("RIGHT");
+    }else if(map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#' && p.getLast().equals("UP")){
+      p.setDirection("UP");
+    }else if(map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#' && p.getLast().equals("DOWN")){
+      p.setDirection("DOWN");
+    }else if(p.getX() >= 183 && map[(p.getY()-50)/18][(p.getX()-166-18)/18] != '#' && p.getLast().equals("LEFT")){
+      p.setDirection("LEFT");
+    }
+  }
 
   ArrayList<String> dirs = new ArrayList<String>();
   if (p.getDirection().equals("RIGHT") && (p.getX()-166)%18 == 0 && p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50)/18][(p.getX()-166+18)/18] == '#') {
@@ -448,6 +470,7 @@ public void checkStates() {
     }
   }
 }
+
 
 public void draw() {
   background(23, 32, 49);
