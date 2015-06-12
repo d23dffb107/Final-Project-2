@@ -35,8 +35,13 @@ public class Ghost {
     return weak || dead;
   }
 
-  public void kill() {
-    dead = true;
+  public boolean kill() {
+    if (dead != true) {
+      dead = true;
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public void display() {

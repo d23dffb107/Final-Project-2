@@ -14,6 +14,7 @@ public class PacMan {
     }
     time = millis();
     speed = 2;
+    lastCommand = new String();
   }
 
   public int getX() {

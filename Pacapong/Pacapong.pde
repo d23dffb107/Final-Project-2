@@ -10,6 +10,8 @@ private Minim minim;
 private PImage img, spaceInvader;
 private ArrayList<Ghost> ghosts;
 private ArrayList<int[]> emptyTiles;
+private ArrayList<SpaceInvader> leftSI, rightSI;
+private ArrayList<Bullet> leftB, rightB;
 private int numPowerUps;
 
 public void setup() {
@@ -29,6 +31,10 @@ public void setup() {
   }
   ghosts = new ArrayList<Ghost>();
   emptyTiles = new ArrayList<int[]>();
+  leftSI = new ArrayList<SpaceInvader>();
+  rightSI = new ArrayList<SpaceInvader>();
+  leftB = new ArrayList<Bullet>();
+  rightB = new ArrayList<Bullet>();
   spawnGhost();
   //minim = new Minim(this);
   //player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 2048);
@@ -105,7 +111,6 @@ public void move() {
     }
     if (p.getOwner() == left && p.getDirection().equals("RIGHT") && p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#' && (p.getX()-166)%18 == 0) {
       p.setDirection("UP");
-      
     }
   }
   if (keyS) {
@@ -115,7 +120,6 @@ public void move() {
     }
     if (p.getOwner() == left && p.getDirection().equals("RIGHT") && p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#' && (p.getX()-166)%18 == 0) {
       p.setDirection("DOWN");
-      
     }
   }
   if (keyA) {
@@ -131,7 +135,6 @@ public void move() {
     }
     if (p.getOwner() == left && p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50)/18][(p.getX()-166+18)/18] != '#' && (p.getY()-50)%18 == 0) {
       p.setDirection("RIGHT");
-      
     }
   }
   if (keyUp) {
@@ -141,7 +144,6 @@ public void move() {
     }
     if (p.getOwner() == right && p.getDirection().equals("LEFT") && p.getX() >= 184 && p.getX() <= 635 && map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#' && (p.getX()-166)%18 == 0) {
       p.setDirection("UP");
-      
     }
   }
   if (keyDown) {
@@ -151,7 +153,6 @@ public void move() {
     }
     if (p.getOwner() == right && p.getDirection().equals("LEFT") && p.getX() >= 184 && p.getX() <= 635 && map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#' && (p.getX()-166)%18 == 0) {
       p.setDirection("DOWN");
-      
     }
   }
   if (keyLeft) {
@@ -161,7 +162,6 @@ public void move() {
     }
     if (p.getOwner() == right && p.getX() >= 184 && p.getX() <= 635 && map[(p.getY()-50)/18][(p.getX()-166-18)/18] != '#' && (p.getY()-50)%18 == 0) {
       p.setDirection("LEFT");
-      
     }
   }
   if (keyRight) {
@@ -315,8 +315,9 @@ public void checkStates() {
   for (Ghost g : ghosts) {
     if (abs(p.getX() - g.getX()) <= 2 && abs(p.getY() - g.getY()) <= 2) {
       if (g.isWeak()) {
-        g.kill();
-        p.getOwner().addScore(10);
+        if ( g.kill()) {
+          p.getOwner().addScore(10);
+        }
       } else if (!g.isWeak()) {
         p.getOwner().addScore(-5);
         if (p.getOwner() == left) {
@@ -330,28 +331,28 @@ public void checkStates() {
 
   ArrayList<String> dirs = new ArrayList<String>();
   if (p.getDirection().equals("RIGHT") && (p.getX()-166)%18 == 0 && p.getX() >= 166 && p.getX() <= 617 && map[(p.getY()-50)/18][(p.getX()-166+18)/18] == '#') {
-    if(p.getLast().equals("UP") && map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#'){
+    if (p.getLast().equals("UP") && map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#') {
       p.setDirection("UP");
-    }else if(p.getLast().equals("DOWN") && map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#'){
+    } else if (p.getLast().equals("DOWN") && map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#') {
       p.setDirection("DOWN");
-    }else{
+    } else {
       if (map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#') {
         dirs.add("UP");
       }
       if (map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#') {
         dirs.add("DOWN");
       }
-    p.setDirection(dirs.get((int)random(dirs.size())));
+      p.setDirection(dirs.get((int)random(dirs.size())));
     }
   }
   if (p.getDirection().equals("LEFT") && (p.getX()-166)%18 == 0 && p.getX() >= 184 && p.getX() <= 635 && map[(p.getY()-50)/18][(p.getX()-166-18)/18] == '#') {
-    if(p.getLast().equals("UP") && map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#'){
+    if (p.getLast().equals("UP") && map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#') {
       p.setDirection("UP");
-    }else if(p.getLast().equals("DOWN") && map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#'){
+    } else if (p.getLast().equals("DOWN") && map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#') {
       p.setDirection("DOWN");
-    }else{
+    } else {
       if (map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#') {
-      dirs.add("UP");
+        dirs.add("UP");
       }
       if (map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#') {
         dirs.add("DOWN");
