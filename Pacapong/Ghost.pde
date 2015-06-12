@@ -32,7 +32,7 @@ public class Ghost {
   }
 
   public boolean isWeak() {
-    return weak;
+    return weak || dead;
   }
 
   public void kill() {

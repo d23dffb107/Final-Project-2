@@ -438,7 +438,7 @@ public void draw() {
     if (ghosts.size() <= millis() / 15000) {
       spawnGhost();
     }
-    if (numPowerUps < millis() / 3000) {
+    if (numPowerUps + 1 < millis() / 3000) {
       int[] xy = emptyTiles.remove(int(random(emptyTiles.size())));
       int x = xy[1];
       int y = xy[0];

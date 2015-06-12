@@ -80,16 +80,19 @@ public class PacMan {
           x += 1;
         }
       }
-
-      if (direction.equals("RIGHT")) {
-        x += speed;
-      } else if (direction.equals("LEFT")) {
-        x -= speed;
-      } else if (direction.equals("UP")) {
-        y -= speed;
-      } else if (direction.equals("DOWN")) {
-        y += speed;
+      
+      if (millis() <= 60000) {
+        if (direction.equals("RIGHT")) {
+          x += speed;
+        } else if (direction.equals("LEFT")) {
+          x -= speed;
+        } else if (direction.equals("UP")) {
+          y -= speed;
+        } else if (direction.equals("DOWN")) {
+          y += speed;
+        }
       }
+      
     } else {
       if (owner.getX() < 150) {
         x = owner.getX() + 10;
