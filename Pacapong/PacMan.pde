@@ -51,13 +51,7 @@ public class PacMan {
   }
 
   public void setDirection(String dir) {
-    if (dir.equals("UP") && !direction.equals("DOWN") && millis() >= time + 1000 && x > 166 && x < 640) {
-      direction = "UP";
-    } else if (dir.equals("DOWN") && !direction.equals("UP") && millis() >= time + 1000 && x > 166 && x < 640) {
-      direction = "DOWN";
-    } else if (dir.equals("LEFT") || dir.equals("RIGHT")) {
-      direction = dir;
-    }
+    direction = dir;
   }
 
   public void display() {
@@ -83,9 +77,9 @@ public class PacMan {
       arc(x, y, 16, 16, HALF_PI + offset, TWO_PI);
     }
 
-    if (millis() >= time + 1000 && millis() <= 60000) {
+    if (millis() >= time + 1000) {
       if ((x < 166 || x > 640) && (y - 50) % 18 != 0) {
-        if ((y - 68) % 36 < 9) {
+        if ((y - 68) % 36 < 18) {
           y -= (y - 68) % 36;
         } else {
           y += 36 - (y - 68) % 36;
@@ -94,16 +88,19 @@ public class PacMan {
           x += 1;
         }
       }
-
-      if (direction.equals("RIGHT")) {
-        x += speed;
-      } else if (direction.equals("LEFT")) {
-        x -= speed;
-      } else if (direction.equals("UP")) {
-        y -= speed;
-      } else if (direction.equals("DOWN")) {
-        y += speed;
+      
+      if (millis() <= 60000) {
+        if (direction.equals("RIGHT")) {
+          x += speed;
+        } else if (direction.equals("LEFT")) {
+          x -= speed;
+        } else if (direction.equals("UP")) {
+          y -= speed;
+        } else if (direction.equals("DOWN")) {
+          y += speed;
+        }
       }
+      
     } else {
       if (owner.getX() < 150) {
         x = owner.getX() + 10;
