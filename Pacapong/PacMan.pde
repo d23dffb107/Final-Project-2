@@ -1,7 +1,7 @@
 public class PacMan {
   private int x, y, time, speed;
   private Paddle owner;
-  private String direction,lastCommand;
+  private String direction, lastCommand;
 
   public PacMan(int x, int y, Paddle owner) {
     this.x = x;
@@ -42,17 +42,19 @@ public class PacMan {
   public String getDirection() {
     return direction;
   }
-  
-  public void setLast(String last){
+
+  public void setLast(String last) {
     lastCommand = last;
   }
-  
-  public String getLast(){
+
+  public String getLast() {
     return lastCommand;
   }
 
   public void setDirection(String dir) {
-    direction = dir;
+    if (millis() >= time + 1000 && millis() <= 60000) {
+      direction = dir;
+    }
   }
 
   public void display() {
@@ -85,11 +87,11 @@ public class PacMan {
         } else {
           y += 36 - (y - 68) % 36;
         }
-        if (x % 2 == 1) {
-          x += 1;
+        if ((x - 166) % speed != 0) {
+          x -= (x - 166) % speed;
         }
       }
-      
+
       if (millis() <= 60000) {
         if (direction.equals("RIGHT")) {
           x += speed;
@@ -101,7 +103,6 @@ public class PacMan {
           y += speed;
         }
       }
-      
     } else {
       if (owner.getX() < 150) {
         x = owner.getX() + 10;

@@ -9,9 +9,19 @@ public class SpaceInvader {
     this.SI = SI;
   }
 
+  public int getX() {
+    return x;
+  }
+
+  public int getY() {
+    return y;
+  }
+
   public void display() {
     image(SI, x, y);
-    y += speed;
+    if (millis() <= 60000) {
+      y += speed;
+    }
   }
 }
 

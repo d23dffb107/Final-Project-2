@@ -7,6 +7,7 @@ public class Ghost {
     this.x = x;
     this.y = y;
     this.direction = direction;
+    speed = 2;
   }
 
   public int getX() {
@@ -29,6 +30,12 @@ public class Ghost {
     weak = true;
     time = millis();
     speed = 1;
+    if ((x - 166) % speed != 0) {
+      x -= (x - 166) % speed;
+    }
+    if ((y - 50) % speed != 0) {
+      y -= (y - 50) % speed;
+    }
   }
 
   public boolean isWeak() {
@@ -48,11 +55,11 @@ public class Ghost {
     if (millis() - time >= 2000) {
       weak = false;
       speed = 2;
-      if (x % 2 == 1) {
-        x++;
+      if ((x - 166) % speed != 0) {
+        x -= (x - 166) % speed;
       }
-      if (y % 2 == 1) {
-        y++;
+      if ((y - 50) % speed != 0) {
+        y -= (y - 50) % speed;
       }
     }
     if (!dead) {
