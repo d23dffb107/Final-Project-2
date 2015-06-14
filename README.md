@@ -53,3 +53,5 @@ To play, use WASD to move the left paddle and the arrow keys to move the right p
 	Powerups spawn every 3 seconds (50% chance of big orb, no space invaders yet). Can eat ghosts if you ate a big orb in the last 2 seconds, giving you lots of points. (Ri Jiu)
 6/9/15:
 	Space invaders icon show up, but don't spawn space invaders yet. (Ri Jiu)
+6/13/15:
+	Space invaders are spawn and if they collide with the paddle, that player loses points. No bullets yet. (Ri Jiu)
