@@ -13,7 +13,7 @@ public class PacMan {
       direction = "LEFT";
     }
     time = millis();
-    speed = 2;
+    speed = 3;
     lastCommand = new String();
   }
 
@@ -81,7 +81,7 @@ public class PacMan {
     }
 
     if (millis() >= time + 1000) {
-      if ((x < 166 || x > 640) && (y - 50) % 18 != 0) {
+      if ((x < 166 || x > 634) && (y - 50) % 18 != 0) {
         if ((y - 68) % 36 < 18) {
           y -= (y - 68) % 36;
         } else {
