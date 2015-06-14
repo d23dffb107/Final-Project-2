@@ -5,7 +5,7 @@ public class SpaceInvader {
   public SpaceInvader(int x, int y, PImage SI) {
     this.x = x;
     this.y = y;
-    speed = 2;
+    speed = 1;
     this.SI = SI;
   }
 

@@ -35,7 +35,7 @@ public void setup() {
   rightSI = new ArrayList<SpaceInvader>();
   leftB = new ArrayList<Bullet>();
   rightB = new ArrayList<Bullet>();
-  speed = 2;
+  speed = 3;
   spawnGhost();
   minim = new Minim(this);
   player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 4096);
@@ -108,6 +108,9 @@ public void keyReleased() {
 public void move() {
   if (keyW) {
     p.setLast("UP");
+    if (p.getOwner() == left) {
+      p.setLast("UP");
+    }
     if (left.getY() >= 75) {
       left.move(0, -speed);
     }
@@ -117,6 +120,9 @@ public void move() {
   }
   if (keyS) {
     p.setLast("DOWN");
+    if (p.getOwner() == left) {
+      p.setLast("DOWN");
+    }
     if (left.getY() <= 375) {
       left.move(0, speed);
     }
@@ -132,6 +138,9 @@ public void move() {
   }
   if (keyD) {
     p.setLast("RIGHT");
+    if (p.getOwner() == left) {
+      p.setLast("RIGHT");
+    }
     if (left.getX() <= 140) {
       left.move(speed, 0);
     }
@@ -141,6 +150,9 @@ public void move() {
   }
   if (keyUp) {
     p.setLast("UP");
+    if (p.getOwner() == right) {
+      p.setLast("UP");
+    }
     if (right.getY() >= 75) {
       right.move(0, -speed);
     }
@@ -150,6 +162,9 @@ public void move() {
   }
   if (keyDown) {
     p.setLast("DOWN");
+    if (p.getOwner() == right) {
+      p.setLast("DOWN");
+    }
     if (right.getY() <= 375) {
       right.move(0, speed);
     }
@@ -159,6 +174,9 @@ public void move() {
   }
   if (keyLeft) {
     p.setLast("LEFT");
+    if (p.getOwner() == right) {
+      p.setLast("LEFT");
+    }
     if (right.getX() >= 660) {
       right.move(-speed, 0);
     }
@@ -266,11 +284,11 @@ public void spawnGhost() {
 
 public void checkStates() {
   if (p.getOwner() != left) {
-    if (p.getX() - left.getX() <= 10 && p.getX() - left.getX() >= 0 && abs(p.getY() - left.getY()) <= 45) {
+    if (abs(p.getX() - left.getX()) <= 18 && abs(p.getY() - left.getY()) <= 53) {
       p.setOwner(left);
     }
   } else if (p.getOwner() != right) {
-    if (right.getX() - p.getX() <= 10 && right.getX() - p.getX() >= 0 && abs(p.getY() - right.getY()) <= 45) {
+    if (abs(p.getX() - right.getX()) <= 18 && abs(p.getY() - right.getY()) <= 53) {
       p.setOwner(right);
     }
   }
@@ -291,6 +309,11 @@ public void checkStates() {
           (p.getY()-50)/18, (p.getX()-166)/18
         }
         );
+        if (p.getOwner() == left && leftSI.size() > 0) {
+          leftB.add(new Bullet(left));
+        } else if (p.getOwner() == right && rightSI.size() > 0) {
+          rightB.add(new Bullet(right));
+        }
       }
     } else if (map[(p.getY()-50)/18][(p.getX()-166)/18] == 'O') {
       if ((p.getY()-50)%18 < 2 && (p.getX()-166)%18 < 2) {
@@ -311,16 +334,16 @@ public void checkStates() {
         }
         );
         if (p.getOwner() == left) {          
-          rightSI.add(new SpaceInvader(783 - int(random(107)), 12, bigSI));
+          rightSI.add(new SpaceInvader(760 - int(random(90)), 12, bigSI));
         } else if (p.getOwner() == right) {
-          leftSI.add(new SpaceInvader(17 + int(random(107)), 12, bigSI));
+          leftSI.add(new SpaceInvader(40 + int(random(90)), 12, bigSI));
         }
       }
     }
   }
 
   for (Ghost g : ghosts) {
-    if (abs(p.getX() - g.getX()) <= 2 && abs(p.getY() - g.getY()) <= 2) {
+    if (abs(p.getX() - g.getX()) <= 3 && abs(p.getY() - g.getY()) <= 3) {
       if (g.isWeak()) {
         if ( g.kill()) {
           p.getOwner().addScore(10);
@@ -336,18 +359,70 @@ public void checkStates() {
     }
   }
 
+  if ((p.getX()-166)%18 == 0 && (p.getY()-50)%18 == 0 && p.getX() >= 166 && p.getX() <= 634) {
+    if (p.getX() <= 617 && map[(p.getY()-50)/18][(p.getX()-166+18)/18] != '#' && p.getLast().equals("RIGHT") && p.getOwner() == left) {
+      p.setDirection("RIGHT");
+    } else if (map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#' && p.getLast().equals("UP") && !p.getDirection().equals("DOWN")) {
+      p.setDirection("UP");
+    } else if (map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#' && p.getLast().equals("DOWN") && !p.getDirection().equals("UP")) {
+      p.setDirection("DOWN");
+    } else if (p.getX() >= 183 && map[(p.getY()-50)/18][(p.getX()-166-18)/18] != '#' && p.getLast().equals("LEFT") && p.getOwner() == right) {
+      p.setDirection("LEFT");
+    }
+  }
+
   for (int i = 0; i < leftSI.size (); i++) {
-    if (abs(leftSI.get(i).getX() - left.getX()) <= 26 && abs(leftSI.get(i).getY() - left.getY()) <= 47) {
+    SpaceInvader s = leftSI.get(i);
+    if (s.getY() >= 462 || (abs(s.getX() - left.getX()) <= 26 && abs(s.getY() - left.getY()) <= 47)) {
       left.addScore(-10);
       leftSI.remove(i);
       i--;
     }
+    if (p.getX() <= 166) {
+      if (abs(s.getX() - p.getX()) <= 24 && abs(s.getY() - p.getY()) <= 20) {
+        p.getOwner().addScore(10);
+        leftSI.remove(i);
+        i--;
+      }
+    }
+    if (leftB.size() > 0) {
+      for (int b = 0; b < leftB.size (); b++) {
+        if (abs(leftB.get(b).getX() - s.getX()) <= 18 && abs(leftB.get(b).getY() - s.getY()) <= 8) {
+          left.addScore(10);
+          leftSI.remove(i);
+          i--;
+          leftB.remove(b);
+          b--;
+          break;
+        }
+      }
+    }
   }
   for (int i = 0; i < rightSI.size (); i++) {
-    if (abs(rightSI.get(i).getX() - right.getX()) <= 26 && abs(rightSI.get(i).getY() - right.getY()) <= 47) {
+    SpaceInvader s = rightSI.get(i);
+    if (s.getY() >= 462 || (abs(s.getX() - right.getX()) <= 26 && abs(s.getY() - right.getY()) <= 47)) {
       right.addScore(-10);
       rightSI.remove(i);
       i--;
+    }
+    if (p.getX() >= 634) {
+      if (abs(s.getX() - p.getX()) <= 24 && abs(s.getY() - p.getY()) <= 20) {
+        p.getOwner().addScore(10);
+        rightSI.remove(i);
+        i--;
+      }
+    }
+    if (rightB.size() > 0) {
+      for (int b = 0; b < rightB.size (); b++) {
+        if (abs(rightB.get(b).getX() - s.getX()) <= 18 && abs(rightB.get(b).getY() - s.getY()) <= 8) {
+          right.addScore(10);
+          rightSI.remove(i);
+          i--;
+          rightB.remove(b);
+          b--;
+          break;
+        }
+      }
     }
   }
 
@@ -475,6 +550,20 @@ public void checkStates() {
 public void draw() {
   background(23, 32, 49);
   image(img, 400, 225);
+  fill(255, 255, 255);
+  arc(400, 30, 20, 20, 3*HALF_PI, 3*HALF_PI + millis() * PI / 30000.0);
+  arc(400, 30, 20, 20, 0, millis() * PI / 30000.0 - HALF_PI);
+  for (int y = 0; y < map.length; y++) {
+    for (int x = 0; x < map[y].length; x++) 
+      if (map[y][x] == 'o') {
+        ellipse(166 + 18 * x, 50 + 18 * y, 5, 5);
+      } else if (map[y][x] == 'O') {
+        ellipse(166 + 18 * x, 50 + 18 * y, 10, 10);
+      } else if (map[y][x] == 'S') {
+        image(smallSI, 166 + 18 * x, 50 + 18 * y);
+      }
+  }
+
   left.display();
   right.display();
   p.display();
@@ -486,6 +575,22 @@ public void draw() {
   }
   for (SpaceInvader s : rightSI) {
     s.display();
+  }
+  for (int b = 0; b < leftB.size (); b++) {
+    if (leftB.get(b).getY() >= -3) {
+      leftB.get(b).display();
+    } else {
+      leftB.remove(b);
+      b--;
+    }
+  }
+  for (int b = 0; b < rightB.size (); b++) {
+    if (rightB.get(b).getY() >= -3) {
+      rightB.get(b).display();
+    } else {
+      rightB.remove(b);
+      b--;
+    }
   }
   if (millis() <= 60000) {
     move();
@@ -506,27 +611,13 @@ public void draw() {
         }
         while (map[y][x] == '#');
       }
-      if (randomGaussian() < 0) {
+      if (int(random(3)) == 0) {
         map[y][x] = 'O';
       } else {
         map[y][x] = 'S';
       }
       numPowerUps++;
     }
-  }
-
-  fill(255, 255, 255);
-  arc(400, 30, 20, 20, 3*HALF_PI, 3*HALF_PI + millis() * PI / 30000.0);
-  arc(400, 30, 20, 20, 0, millis() * PI / 30000.0 - HALF_PI);
-  for (int y = 0; y < map.length; y++) {
-    for (int x = 0; x < map[y].length; x++) 
-      if (map[y][x] == 'o') {
-        ellipse(166 + 18 * x, 50 + 18 * y, 5, 5);
-      } else if (map[y][x] == 'O') {
-        ellipse(166 + 18 * x, 50 + 18 * y, 10, 10);
-      } else if (map[y][x] == 'S') {
-        image(smallSI, 166 + 18 * x, 50 + 18 * y);
-      }
   }
 }
 

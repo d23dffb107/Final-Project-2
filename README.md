@@ -55,3 +55,6 @@ To play, use WASD to move the left paddle and the arrow keys to move the right p
 	Space invaders icon show up, but don't spawn space invaders yet. (Ri Jiu)
 6/13/15:
 	Space invaders are spawn and if they collide with the paddle, that player loses points. No bullets yet. (Ri Jiu)
+6/14/15:
+	Bullets get shot if there are space invaders on your side. Hit detection between space invaders and pacman, and space invaders and bullets. Changes to speeds. (Ri Jiu) 
+	Spawning of powerups isn't 50/50. Space invaders are favoured 2:1. (Ri Jiu)

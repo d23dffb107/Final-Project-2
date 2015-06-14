@@ -1,10 +1,10 @@
 public class Bullet {
   private int x, y, speed;
 
-  public Bullet(int x, int y) {
-    this.x = x;
-    this.y = y;
-    speed = 2;
+  public Bullet(Paddle owner) {
+    this.x = owner.getX();
+    this.y = owner.getY() - 35;
+    speed = 3;
   }
 
   public int getX() {
@@ -16,8 +16,11 @@ public class Bullet {
   }
 
   public void display() {
+    fill(255);
     ellipse(x, y, 5, 5);
-    y -= speed;
+    if (millis() <= 60000) {
+      y -= speed;
+    }
   }
 }
 

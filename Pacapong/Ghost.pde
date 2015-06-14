@@ -7,7 +7,7 @@ public class Ghost {
     this.x = x;
     this.y = y;
     this.direction = direction;
-    speed = 2;
+    speed = 1;
   }
 
   public int getX() {
@@ -29,7 +29,6 @@ public class Ghost {
   public void makeWeak() {
     weak = true;
     time = millis();
-    speed = 1;
     if ((x - 166) % speed != 0) {
       x -= (x - 166) % speed;
     }
