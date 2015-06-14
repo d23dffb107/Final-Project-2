@@ -363,18 +363,6 @@ public void checkStates() {
     }
   }
 
-  if ((p.getX()-166)%18 == 0 && (p.getY()-50)%18 == 0 && p.getX() >= 166 && p.getX() <= 634) {
-    if (p.getX() <= 617 && map[(p.getY()-50)/18][(p.getX()-166+18)/18] != '#' && p.getLast().equals("RIGHT") && p.getOwner() == left) {
-      p.setDirection("RIGHT");
-    } else if (map[(p.getY()-50-18)/18][(p.getX()-166)/18] != '#' && p.getLast().equals("UP") && !p.getDirection().equals("DOWN")) {
-      p.setDirection("UP");
-    } else if (map[(p.getY()-50+18)/18][(p.getX()-166)/18] != '#' && p.getLast().equals("DOWN") && !p.getDirection().equals("UP")) {
-      p.setDirection("DOWN");
-    } else if (p.getX() >= 183 && map[(p.getY()-50)/18][(p.getX()-166-18)/18] != '#' && p.getLast().equals("LEFT") && p.getOwner() == right) {
-      p.setDirection("LEFT");
-    }
-  }
-
   for (int i = 0; i < leftSI.size (); i++) {
     SpaceInvader s = leftSI.get(i);
     if (s.getY() >= 462 || (abs(s.getX() - left.getX()) <= 26 && abs(s.getY() - left.getY()) <= 47)) {
