@@ -24,6 +24,10 @@ public class Paddle {
   public color getColor() {
     return c;
   }
+  
+  public int getScore(){
+    return score;
+  }
 
   public void addScore(int s) {
     score += s;

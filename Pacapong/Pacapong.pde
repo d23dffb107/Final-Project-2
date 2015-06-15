@@ -12,7 +12,7 @@ private ArrayList<Ghost> ghosts;
 private ArrayList<int[]> emptyTiles;
 private ArrayList<SpaceInvader> leftSI, rightSI;
 private ArrayList<Bullet> leftB, rightB;
-private int speed, numPowerUps;
+private int speed, numPowerUps, stage;
 
 public void setup() {
   size(800, 450);
@@ -21,6 +21,7 @@ public void setup() {
   rectMode(CENTER);
   ellipseMode(CENTER);
   imageMode(CENTER);
+  textAlign(CENTER);
   map("map.txt");
   left = new Paddle(color(249, 187, 126), 75, 225);
   right = new Paddle(color(211, 105, 106), 725, 225);
@@ -37,9 +38,9 @@ public void setup() {
   rightB = new ArrayList<Bullet>();
   speed = 3;
   spawnGhost();
-  minim = new Minim(this);
-  player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 4096);
-  player.play();
+  //minim = new Minim(this);
+  //player = minim.loadFile("Winter Night's Journey (Through The Storm).mp3", 4096);
+  //player.play();
   img = loadImage("map.png");
   smallSI = loadImage("spaceInvadersSmall.png");
   bigSI = loadImage("spaceInvadersBig.png");
@@ -539,78 +540,132 @@ public void checkStates() {
   }
 }
 
+public void mouseClicked(){
+  if(stage == 0){
+    if(mouseX >= 125 && mouseX <= 325 && mouseY >= 250 && mouseY <= 350){
+      stage=2;
+    }else if(mouseX >= 475 && mouseX <= 675 && mouseY >= 250 && mouseY <= 350){
+      stage=1;
+    }
+  }else if(stage == 1){
+    if(mouseX >= 300 && mouseX <= 500 && mouseY >= 275 && mouseY <= 375){
+      stage = 0;
+    }
+  }else if(stage == 3){
+    if(mouseX >= 300 && mouseX <= 500 && mouseY >= 275 && mouseY <= 375){
+      stage = 0;
+    }
+  }
+}
 
 public void draw() {
   background(23, 32, 49);
-  image(img, 400, 225);
-  fill(255, 255, 255);
-  arc(400, 30, 20, 20, 3*HALF_PI, 3*HALF_PI + millis() * PI / 30000.0);
-  arc(400, 30, 20, 20, 0, millis() * PI / 30000.0 - HALF_PI);
-  for (int y = 0; y < map.length; y++) {
-    for (int x = 0; x < map[y].length; x++) 
-      if (map[y][x] == 'o') {
-        ellipse(166 + 18 * x, 50 + 18 * y, 5, 5);
-      } else if (map[y][x] == 'O') {
-        ellipse(166 + 18 * x, 50 + 18 * y, 10, 10);
-      } else if (map[y][x] == 'S') {
-        image(smallSI, 166 + 18 * x, 50 + 18 * y);
-      }
-  }
-
-  left.display();
-  right.display();
-  p.display();
-  for (Ghost g : ghosts) {
-    g.display();
-  }
-  for (SpaceInvader s : leftSI) {
-    s.display();
-  }
-  for (SpaceInvader s : rightSI) {
-    s.display();
-  }
-  for (int b = 0; b < leftB.size (); b++) {
-    if (leftB.get(b).getY() >= -3) {
-      leftB.get(b).display();
-    } else {
-      leftB.remove(b);
-      b--;
-    }
-  }
-  for (int b = 0; b < rightB.size (); b++) {
-    if (rightB.get(b).getY() >= -3) {
-      rightB.get(b).display();
-    } else {
-      rightB.remove(b);
-      b--;
-    }
-  }
-  if (millis() <= 60000) {
-    move();
-    checkStates();
-    if (ghosts.size() <= millis() / 15000) {
-      spawnGhost();
-    }
-    if (numPowerUps < millis() / 3000) {
-      int x, y;
-      if (emptyTiles.size() > 0) {
-        int[] xy = emptyTiles.remove(int(random(emptyTiles.size())));
-        x = xy[1];
-        y = xy[0];
-      } else {
-        do {
-          x = int(random(25)) + 1;
-          y = int(random(19)) + 1;
+  if(stage == 0){
+    fill(39,174,204);
+    textSize(60);
+    text("Hello",400,100);
+    text("Welcome to Pacapong",400,175);
+    rect(225,300,200,100);
+    rect(575,300,200,100);
+    fill(0);
+    text("Play",225,310);
+    textSize(30);
+    text("How to Play",575,310);
+  }else if (stage == 1){
+    fill(39,174,204);
+    textSize(20);
+    text("Pacapong is just a mishmash of Pong, Pacman, and Space Invaders. Controls are WASD for player 1 and the arrow keys for player 2. Anything eaten gives points. Big dots give the player a chance to eat ghosts for even more points. Eating a space invader spawns a space invader on the opponent. Getting hit by one causes a loss of points.",400,225,600,300);
+    rect(400,325,200,100);
+    fill(0);
+    textSize(40);
+    text("K thnx",400,325);
+  }else if(stage == 2){
+    image(img, 400, 225);
+    fill(255, 255, 255);
+    arc(400, 30, 20, 20, 3*HALF_PI, 3*HALF_PI + millis() * PI / 30000.0);
+    arc(400, 30, 20, 20, 0, millis() * PI / 30000.0 - HALF_PI);
+    for (int y = 0; y < map.length; y++) {
+      for (int x = 0; x < map[y].length; x++) 
+        if (map[y][x] == 'o') {
+          ellipse(166 + 18 * x, 50 + 18 * y, 5, 5);
+        } else if (map[y][x] == 'O') {
+          ellipse(166 + 18 * x, 50 + 18 * y, 10, 10);
+        } else if (map[y][x] == 'S') {
+          image(smallSI, 166 + 18 * x, 50 + 18 * y);
         }
-        while (map[y][x] == '#');
-      }
-      if (int(random(3)) == 0) {
-        map[y][x] = 'O';
-      } else {
-        map[y][x] = 'S';
-      }
-      numPowerUps++;
     }
+  
+    left.display();
+    right.display();
+    p.display();
+    for (Ghost g : ghosts) {
+      g.display();
+    }
+    for (SpaceInvader s : leftSI) {
+      s.display();
+    }
+    for (SpaceInvader s : rightSI) {
+      s.display();
+    }
+    for (int b = 0; b < leftB.size (); b++) {
+      if (leftB.get(b).getY() >= -3) {
+        leftB.get(b).display();
+      } else {
+        leftB.remove(b);
+        b--;
+      }
+    }
+    for (int b = 0; b < rightB.size (); b++) {
+      if (rightB.get(b).getY() >= -3) {
+        rightB.get(b).display();
+      } else {
+        rightB.remove(b);
+        b--;
+      }
+    }
+    if (millis() <= 60000) {
+      move();
+      checkStates();
+      if (ghosts.size() <= millis() / 15000) {
+        spawnGhost();
+      }
+      if (numPowerUps < millis() / 3000) {
+        int x, y;
+        if (emptyTiles.size() > 0) {
+          int[] xy = emptyTiles.remove(int(random(emptyTiles.size())));
+          x = xy[1];
+          y = xy[0];
+        } else {
+          do {
+            x = int(random(25)) + 1;
+            y = int(random(19)) + 1;
+          }
+          while (map[y][x] == '#');
+        }
+        if (int(random(3)) == 0) {
+          map[y][x] = 'O';
+        } else {
+          map[y][x] = 'S';
+        }
+        numPowerUps++;
+      }
+    }else{
+      stage = 3;
+    }
+  }else{
+    if(left.getScore()>right.getScore()){
+      fill(39,174,204);
+      textSize(40);
+      text("Player 1 wins!!!",400,175);
+    }else{
+       fill(39,174,204);
+      textSize(40);
+      text("Player 2 wins!!!",400,175);
+    }
+    rect(400,300,200,100);
+    fill(0);
+    textSize(25);
+    text("Play again",400,300);
   }
 }
 
