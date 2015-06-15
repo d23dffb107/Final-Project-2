@@ -68,10 +68,11 @@ To play, use WASD to move the left paddle and the arrow keys to move the right p
 	Worked on adding a buffer to movement so turning pacman isn't so finicky. (Brian)
 	Bug fixes: Pacman will no longer be stuck in 4 specific spots if moving vertically. Dead ghosts can't kill Pacman. Pacman can't move after game ends. (Ri Jiu)
 6/12/15:
-	Finished last command. (Brian)
+	Finished the last command feature. (Brian)
 	Can't kill dead ghosts again. Started work on Space Invaders part. Added necessary classes. (Ri Jiu)
 6/13/15:
 	Space invaders are spawn and if they collide with the paddle, that player loses points. No bullets yet. (Ri Jiu)
 6/14/15:
 	Bullets get shot if there are space invaders on your side. Hit detection between space invaders and pacman, and space invaders and bullets. Changes to speeds. (Ri Jiu) 
 	Spawning of powerups isn't 50/50. Space invaders are favoured 2:1. (Ri Jiu)
+	Made start screen and a postgame screen. (Brian)
